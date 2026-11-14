@@ -1,0 +1,113 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram id="seaweedfs-architecture" name="Arquitectura propuesta">
+    <mxGraphModel dx="2265" dy="1378" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1450" pageHeight="1020" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="e_client_s3" edge="1" parent="1" source="client" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#28618A;strokeWidth=3;endArrow=block;endFill=1;" target="s3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_s3_filer" edge="1" parent="1" source="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#28618A;strokeWidth=3;endArrow=block;endFill=1;" target="filer" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_filer_meta" edge="1" parent="1" source="filer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#28618A;strokeWidth=3;endArrow=block;endFill=1;" target="metadata" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_filer_vol1" edge="1" parent="1" source="filer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#28618A;strokeWidth=3;endArrow=block;endFill=1;" target="vol1" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="726" y="612" />
+              <mxPoint x="572" y="612" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_filer_vol2" edge="1" parent="1" source="filer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#28618A;strokeWidth=3;endArrow=block;endFill=1;" target="vol2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="726" y="612" />
+              <mxPoint x="1059" y="612" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_master_filer" edge="1" parent="1" source="master" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#AD711E;strokeWidth=3;dashed=1;dashPattern=8 6;endArrow=block;endFill=1;" target="filer" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_replication" edge="1" parent="1" source="vol1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#76529A;strokeWidth=3;endArrow=block;endFill=1;" target="vol2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_heartbeat1" edge="1" parent="1" source="vol1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#AD711E;strokeWidth=3;dashed=1;dashPattern=8 6;endArrow=block;endFill=1;" target="master" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="426" y="729" />
+              <mxPoint x="255" y="729" />
+              <mxPoint x="255" y="539" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_heartbeat2" edge="1" parent="1" source="vol2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#AD711E;strokeWidth=3;dashed=1;dashPattern=8 6;endArrow=block;endFill=1;" target="master" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1059" y="837" />
+              <mxPoint x="149" y="837" />
+              <mxPoint x="149" y="539" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=30;fontStyle=1;" value="&lt;b&gt;SEAWEEDFS - ARQUITECTURA PROPUESTA&lt;/b&gt;" vertex="1">
+          <mxGeometry height="48" width="950" x="250" y="14" as="geometry" />
+        </mxCell>
+        <mxCell id="environment" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;strokeColor=#8793A1;strokeWidth=2;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="660" width="1340" x="55" y="222" as="geometry" />
+        </mxCell>
+        <mxCell id="client" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#263B50;strokeWidth=2;fillColor=#E4EFFD;fontColor=#1F2937;fontFamily=Arial;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontSize=22;" value="&lt;b&gt;CLIENTE S3&lt;/b&gt;" vertex="1">
+          <mxGeometry height="76" width="238" x="607" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#263B50;strokeWidth=2;fillColor=#E4EFFD;fontColor=#1F2937;fontFamily=Arial;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontSize=22;" value="&lt;b&gt;SERVIDOR S3&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Interfaz compatible con S3&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="282" x="585" y="267" as="geometry" />
+        </mxCell>
+        <mxCell id="master" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#263B50;strokeWidth=2;fillColor=#FFF0D6;fontColor=#1F2937;fontFamily=Arial;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontSize=22;" value="&lt;b&gt;MASTER&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Topología y ubicación&lt;br&gt;de los volúmenes&lt;/font&gt;" vertex="1">
+          <mxGeometry height="105" width="282" x="115" y="434" as="geometry" />
+        </mxCell>
+        <mxCell id="filer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#263B50;strokeWidth=2;fillColor=#E5F2E5;fontColor=#1F2937;fontFamily=Arial;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontSize=22;" value="&lt;b&gt;FILER&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Archivos, carpetas&lt;br&gt;y metadatos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="105" width="282" x="585" y="434" as="geometry" />
+        </mxCell>
+        <mxCell id="metadata" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#263B50;strokeWidth=2;fillColor=#E5F2E5;fontColor=#1F2937;fontFamily=Arial;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontSize=21;" value="&lt;b&gt;ALMACÉN DE METADATOS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Persistencia del Filer&lt;/font&gt;" vertex="1">
+          <mxGeometry height="105" width="315" x="987" y="434" as="geometry" />
+        </mxCell>
+        <mxCell id="vol1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#263B50;strokeWidth=2;fillColor=#EEF1F5;fontColor=#1F2937;fontFamily=Arial;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontSize=21;" value="&lt;b&gt;VOLUME SERVER 1&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Datos de archivos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="106" width="290" x="427" y="676" as="geometry" />
+        </mxCell>
+        <mxCell id="vol2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#263B50;strokeWidth=2;fillColor=#EEF1F5;fontColor=#1F2937;fontFamily=Arial;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontSize=21;" value="&lt;b&gt;VOLUME SERVER 2&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Datos de archivos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="106" width="290" x="914" y="676" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_api" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=17;" value="API S3" vertex="1">
+          <mxGeometry height="28" width="85" x="770" y="193" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_ops" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=17;" value="Operaciones de archivos" vertex="1">
+          <mxGeometry height="28" width="240" x="720" y="377" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_locations" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=17;" value="Ubicaciones" vertex="1">
+          <mxGeometry height="28" width="125" x="422" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_metadata" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=17;" value="Metadatos" vertex="1">
+          <mxGeometry height="28" width="100" x="872" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_rw" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=18;" value="Lectura / escritura de datos" vertex="1">
+          <mxGeometry height="30" width="300" x="760" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_rep" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=17;" value="Replicación" vertex="1">
+          <mxGeometry height="28" width="120" x="758" y="681" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_rep2" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=16;fontColor=#76529A;" value="001: 2 copias totales" vertex="1">
+          <mxGeometry height="28" width="180" x="735" y="754" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_heartbeat1" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=17;" value="Registro y latidos" vertex="1">
+          <mxGeometry height="28" width="170" x="190" y="617" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_heartbeat2" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontColor=#263445;fontFamily=Arial;fontSize=17;" value="Registro y latidos" vertex="1">
+          <mxGeometry height="28" width="190" x="478" y="819" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
