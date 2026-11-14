@@ -1,27 +1,44 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage[spanish]{babel}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=2.2cm]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
 \usepackage{csquotes}
+\usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
 
-% Activar solo cuando referencias.bib contenga fuentes reales verificadas:
-% \usepackage[backend=biber,style=ieee]{biblatex}
-% \addbibresource{referencias.bib}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{referencias.bib}
+\DefineBibliographyStrings{spanish}{artno={art\adddot}}
 
 \newcommand{\pendiente}[1]{\par\noindent\textit{Pendiente: #1}\par}
+\setlength{\emergencystretch}{4em}
+\setlength{\parskip}{0.2em}
 
+\makeatletter
+\newcommand{\captionof}[2]{\begingroup\def\@captype{#1}\caption{#2}\endgroup}
+\renewcommand\section{\@startsection{section}{1}{\z@}{-1.5ex plus -.3ex minus -.2ex}{.7ex plus .2ex}{\normalfont\large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}{-1.2ex plus -.3ex minus -.2ex}{.5ex plus .2ex}{\normalfont\normalsize\bfseries}}
+\makeatother
+\setlength{\abovecaptionskip}{3pt}
+\setlength{\textfloatsep}{8pt}
+\setlength{\intextsep}{8pt}
 \begin{document}
+\hypersetup{pageanchor=false}
 
 \begin{titlepage}
 \centering
-{\Large Universidad: pendiente de completar\par}
+{\Large Universidad Técnica Estatal de Quevedo\par}
 \vspace{0.5cm}
-Facultad: pendiente de completar\par
-Carrera: pendiente de completar\par
+Facultad: FCCDD\par
+Carrera: Software\par
 Asignatura: Sistemas Distribuidos\par
 \vfill
 {\LARGE\bfseries TA-IND-01\par}
@@ -30,67 +47,167 @@ Asignatura: Sistemas Distribuidos\par
 \vspace{0.5cm}
 {\Large Análisis crítico de SeaweedFS y comparación con MinIO\par}
 \vfill
-Estudiante: pendiente de completar\par
-Paralelo: pendiente de completar\par
+Estudiante: Jilmar Jesus Cedeño Intriago\par
+Paralelo: B\par
 Fecha de entrega: 15 de noviembre de 2026\par
 \vspace{0.5cm}
 \url{https://github.com/jcedenoi4/TA-IND-01}\par
 \end{titlepage}
+\hypersetup{pageanchor=true}
 
-% Plantilla inicial: no constituye el informe final ni cumple aún la extensión.
 \section*{Resumen}
-\pendiente{Redactar entre 150 y 200 palabras después del análisis y del experimento; incluir enfoque y conclusiones reales.}
-
+En este informe analizo SeaweedFS como sistema distribuido de almacenamiento y lo comparo documentalmente con MinIO. Examino la separación entre Master, servidores de volúmenes, Filer y acceso S3, y relaciono sus decisiones con las transparencias de distribución, CAP, PACELC y los modelos de comunicación. Utilizo artículos recientes, documentación oficial y un laboratorio reproducible con SeaweedFS 3.85, dos servidores de volúmenes y replicación de dos copias. La prueba registrada compara contenidos mediante SHA-256, detiene un servidor y comprueba la lectura del archivo previo y la asignación de nuevos datos. Observo que la lectura continúa desde la copia superviviente, mientras una nueva asignación con la política exigida es rechazada; después del reinicio vuelven a funcionar las nuevas escrituras. Distingo este resultado de una prueba de partición de red y de un estudio de rendimiento. Mi conclusión es que la disponibilidad depende de la operación y de las dependencias que permanecen activas. Considero que SeaweedFS ofrece flexibilidad, pero exige diseñar por separado la protección de datos y metadatos. La comparación con MinIO identifica compromisos arquitectónicos y no demuestra superioridad general de ninguno.
 \section{Introducción}
-\pendiente{Explicar qué problema resuelve SeaweedFS, quién lo utiliza, a qué escala y por qué se eligió. Respaldar las afirmaciones con fuentes.}
+Estudio cómo SeaweedFS conserva y localiza archivos repartidos entre procesos, y lo comparo con MinIO porque ambos ofrecen acceso compatible con S3 mediante diseños diferentes. SeaweedFS está orientado a grandes cantidades de archivos y a reducir el coste de gestionar objetos pequeños\cite{seaweedfs}. Su lista de usuarios incluye 4Sight Imaging e Hypixel\cite[wiki: Actual Users]{seaweedfs}; es información del proyecto, no una auditoría independiente. Como indicio de escala, el incidente analizado menciona servidores de 30 TB\cite[issue 6700]{seaweedfs}; mi laboratorio de una computadora no reproduce esa escala.
 
-\section{Arquitectura del sistema}
-\pendiente{Describir los componentes y sus comunicaciones según la versión estudiada. Incorporar un diagrama original de draw.io o TikZ y explicar la evolución desde el esquema a mano del Anexo A.}
+Delimito el experimento a SeaweedFS 3.85 y la comparación documental a MinIO \path{RELEASE.2025-04-22T22-12-26Z}. Los estudios de MinIO y LustreFS\cite{astsatryan2025,astsatryan2026} y de cargas de archivos\cite{chung2026} orientan la discusión de rendimiento, pero sus mediciones no son resultados propios ni demuestran superioridad universal.
 
+\section{Arquitectura y evolución del diagrama}
+Distingo el plano de control del recorrido del contenido. El Master mantiene la topología y asigna identificadores y ubicaciones; los servidores de volúmenes almacenan datos y notifican su estado. El Filer añade archivos, directorios y metadatos, persistidos aquí con LevelDB2 dentro de su servicio. El servidor S3 ofrece acceso por bucket y clave\cite{seaweedfs}. En la API binaria consulto al Master y transfiero el contenido al servidor indicado; por S3 utilizo un endpoint lógico que oculta esa selección.
+
+\begin{center}
+\includegraphics[width=0.69\linewidth,height=5.2cm,keepaspectratio]{../figuras/arquitectura.png}
+\captionof{figure}{Arquitectura digital en draw.io. LevelDB2 pertenece al Filer; no es un sexto contenedor.}\label{fig:arquitectura}
+\end{center}
+En mi bosquejo del Anexo A representé las conexiones principales con nombre y fecha. En el digital precisé los roles S3, los latidos, los metadatos y la replicación \texttt{001}; conservé el editable en \texttt{figuras/arquitectura.drawio}. Ambas representaciones parten de la guía asistida declarada. Los cinco contenedores comparten un equipo: separar procesos no elimina esa dependencia física.
+
+\newpage
 \section{Transparencias de distribución}
-\pendiente{Analizar acceso, ubicación, migración, reubicación, replicación, concurrencia y fallos; justificar cuáles ofrece y cuáles limita.}
+Valoro qué oculta cada interfaz y distingo documentación de observación propia\cite{seaweedfs}.
+\begin{center}\small
+\captionof{table}{Transparencias y límites en el alcance estudiado.}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}X@{}}\toprule
+Transparencia & Valoración \\\midrule
+Acceso & Parcial: S3 ofrece operaciones conocidas, pero no equivale a todas las interfaces binarias, Filer o POSIX. \\
+Ubicación & Filer/S3 ocultan el servidor; la API binaria entrega una ubicación que el cliente utiliza. \\
+Migración & La resolución por identificador permite localizar destinos; no probé movimientos ni su invisibilidad para el cliente. \\
+Reubicación & No comprobada durante operaciones activas; exige considerar solicitudes y ubicaciones conservadas. \\
+Replicación & El cliente S3 no elige copia; consulté puertos distintos para verificar ambas réplicas. \\
+Concurrencia & Admite solicitudes simultáneas; no demostré serialización ni transacciones entre archivos. \\
+Fallos & Parcial: continuó la lectura previa, pero falló una nueva asignación con dos copias. \\\bottomrule
+\end{tabularx}\end{center}
+Mi conclusión es que transparencia y diagnóstico deben coexistir: ocultar ubicaciones al usuario no debe impedir comprobar las copias.
 
-\section{Teorema CAP y PACELC}
-\pendiente{Argumentar el comportamiento durante particiones y el compromiso entre latencia y consistencia sin particiones. Precisar operación, configuración y evidencia; evitar clasificaciones sin respaldo.}
+\section{CAP y PACELC}
+CAP establece que, durante una partición de red, no pueden garantizarse simultáneamente consistencia fuerte y disponibilidad de todas las operaciones dirigidas a nodos no fallidos. Devolver un error no equivale a completar la operación requerida\cite{cmucap2023}.
+
+SeaweedFS documenta escrituras que necesitan todas las copias requeridas y lecturas que pueden utilizar una\cite[wiki: Replication]{seaweedfs}. Interpreto que ese recorrido de escritura prioriza coordinación y consistencia frente a aceptar cambios independientes en lados incomunicados. La clasificación depende de operación, configuración y capa: no demuestra linealizabilidad global. Mi caída de contenedor no fue una partición; el HTTP 406 demuestra una restricción de asignación, no el teorema CAP.
+
+Sin partición, PACELC considera latencia frente a consistencia\cite{cmucap2023}. Esperar las réplicas incorpora comunicación al tiempo de confirmación: en ese alcance interpreto prioridad de consistencia con coste de latencia. Leer una copia reduce coordinación, pero no justifica etiquetar todo SeaweedFS como PC/EC. En MinIO, los quórums y la consistencia declarada tras una escritura confirmada también restringen operaciones si no hay participantes suficientes\cite{minio2025}. No medí latencias comparables entre productos.
 
 \section{Modelos de comunicación}
-\pendiente{Identificar cliente-servidor, peer-to-peer o modelo híbrido, sincronía y asincronía, y uso de sockets, RPC o mensajería según fuentes verificadas.}
+Identifico una organización de servicios especializados: cliente-servidor en las consultas y coordinación entre servidores para topología y copias. La API binaria usa HTTP/JSON y el código incluye gRPC\cite{seaweedfs}; estos son mecanismos de comunicación, no arquitecturas distintas. El cliente espera confirmación de carga, mientras registro y latidos actualizan el control en intercambios separados. Paralelismo interno no implica confirmar antes de completar las copias requeridas.
 
+DITIS distingue mensajes síncronos y asíncronos mediante actores\cite{lucasfilho2025}; lo utilizo como referencia conceptual, sin atribuir ese modelo a SeaweedFS. No identifiqué un broker externo en mi despliegue. MinIO comparte la interfaz S3, pero coordina conjuntos de almacenamiento propios\cite{minio2025}.
+
+\newpage
 \section{Tolerancia a fallos}
-\pendiente{Explicar fallos soportados, detección y recuperación. Incorporar un incidente real documentado si existe y se verifica.}
+La replicación consume espacio adicional; la codificación reduce parte de esa redundancia a costa de cómputo y reconstrucción, como ilustra BE-DSN sobre IPFS\cite{hameed2025}. En SeaweedFS, \texttt{001} mantiene dos copias en servidores del mismo rack lógico\cite[wiki: Replication]{seaweedfs}. En mi equipo protege ante la detención ensayada de un proceso, no ante pérdida de la computadora.
+
+Los latidos permiten actualizar ubicaciones; detectar desconexión no demuestra destrucción del disco. Varios Masters pueden utilizar Raft, pero ejecuté uno y no probé su caída. Proteger el contenido tampoco protege automáticamente el Filer o su base de metadatos\cite{seaweedfs}. Reiniciar el mismo servidor con disco persistente es diferente de reconstruir una copia desde un disco vacío; reintentar una solicitud no crea un destino ausente.
+
+Como incidente real analizo el issue 6700, abierto por \texttt{gerdriesselmann} el 10 de abril de 2025: describe SeaweedFS 3.85, discos llenos en solo lectura y asignaciones fallidas pese a agregar servidores\cite[issue 6700]{seaweedfs}. Es un reporte de usuario, sin causa raíz confirmada. Lo relaciono con revisar cupos, crecimiento y topología, sin afirmar que reproduje el mismo fallo.
 
 \section{Experimentación propia}
-\pendiente{Documentar entorno, versiones, hipótesis, procedimiento, comandos, salidas reales e interpretación. Incluir al menos cuatro capturas propias con datos identificativos y fecha.}
+Preparé el laboratorio con el apoyo declarado: SeaweedFS 3.85, revisión \texttt{7d7e06681}, imagen fijada por digest, cinco contenedores Linux, Windows 11, Docker Engine 29.7.2 y Compose v5.5.0. Configuré volúmenes de 32 MB, 64 cupos por servidor y \texttt{-readMode=local} para comprobar cada copia sin reenvíos.
 
-\section{Ejemplos del entorno del estudiante}
-\subsection{Primer ejemplo}
-\pendiente{Describir un sistema conocido de primera mano, una observación real y su relación con un concepto de la unidad.}
-\subsection{Segundo ejemplo}
-\pendiente{Describir otro sistema y una observación real; distinguir lo observado de las inferencias sobre su implementación.}
+El script asigna un identificador, carga 112 bytes, compara SHA-256 en ambas copias, comprueba S3/Filer, detiene \texttt{volume1}, consulta la copia superviviente e intenta una nueva asignación replicada. Después reinicia el nodo y repite la escritura. Conservo comandos y resultados completos en \texttt{experimento/} y tres registros en \texttt{evidencias/}.
 
+\begin{center}
+\includegraphics[width=0.88\linewidth,height=3.0cm,keepaspectratio]{../evidencias/captura_01.png}
+\captionof{figure}{Cinco servicios y versión 3.85; usuario, equipo y fecha local 14/11/2026, 16:25:54. Consulta tomada después de recuperar el nodo.}
+\end{center}
+\begin{center}
+\includegraphics[width=0.68\linewidth,height=5.5cm,keepaspectratio]{../evidencias/captura_02.png}
+\captionof{figure}{Lecturas HTTP 200 del mismo archivo en 8080 y 8081; contenido e identificación del entorno.}
+\end{center}
+
+\newpage
+\subsection{Resultados e interpretación}
+En el registro final del 14/11/2026, 16:11:23--16:11:44, la asignación devolvió HTTP 200, la carga HTTP 201 y ambas copias el mismo SHA-256. Tras detener \texttt{volume1}, continuaron la lectura directa superviviente y la lectura S3 del objeto previo. Una asignación en colección nueva con \texttt{001} devolvió HTTP 406 tras unos 10,05 s, pese a quedar 50 cupos libres. Al reiniciar el nodo reaparecieron las dos ubicaciones y volvieron a completarse nuevas escrituras.
+
+El primer ensayo agotó ocho cupos por servidor: conservé el fallo y corregí crecimiento y capacidad antes de interpretar el rechazo posterior. Concluyo que disponibilidad de lectura previa y de nueva asignación son distintas. No probé partición, concurrencia, pérdida de disco ni caída del Master/Filer; una ejecución de 112 bytes no es un benchmark.
+
+\begin{center}
+\includegraphics[width=0.88\linewidth,height=4.8cm,keepaspectratio]{../evidencias/captura_03.png}
+\captionof{figure}{Detención de volume1 y lectura HTTP 200 desde volume2, puerto 8081.}
+\end{center}
+\begin{center}
+\includegraphics[width=0.82\linewidth,height=5.0cm,keepaspectratio]{../evidencias/captura_04.png}
+\captionof{figure}{Reinicio de volume1 y lectura HTTP 200 recuperada en el puerto 8080.}
+\end{center}
+Las capturas 2--4 muestran fecha HTTP y usuario/equipo en el contenido; las horas GMT corresponden a las 16:23--16:25 de Ecuador. Complementan el registro automatizado, que documenta el HTTP 406. Explico el resultado en \url{https://youtu.be/Bx9uwho5vcA}.
+
+\section{Ejemplos de mi entorno}
+\textbf{SGA de la UTEQ.} Durante inscripciones observé funcionalidades lentas; con F5 a veces cargaban rápido y otras debía esperar. Lo relaciono con concurrencia, latencia y reintentos, sin demostrar qué recurso estaba saturado ni una cola por orden de llegada. Reintentar puede generar más solicitudes: responder con demora no equivale a una caída completa.
+
+\textbf{WhatsApp.} Observé mensajes aparentemente enviados que el destinatario recibía después. La conexión es una explicación posible, no confirmada. Relaciono la experiencia con comunicación asíncrona: enviar no implica recepción inmediata. No demuestra inconsistencia ni una clasificación CAP. Como en mi ensayo, una confirmación de envío no sustituye comprobar el destino.
+
+\newpage
 \section{Análisis comparativo: SeaweedFS y MinIO}
-\pendiente{Construir una tabla con al menos cinco criterios de la unidad, especificando versiones, configuración y fuentes; discutir los compromisos observados.}
+Comparo el laboratorio SeaweedFS 3.85 con MinIO distribuido documentado en abril de 2025\cite{seaweedfs,minio2025}. AbouZaid et al. describen su integración S3 en una plataforma lakehouse\cite{abouzaid2025}; compartir interfaz no implica garantías idénticas.
+\begin{center}\small
+\captionof{table}{Comparación documental; no ejecuté MinIO.}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}p{2.1cm}XX@{}}\toprule
+Criterio & SeaweedFS & MinIO distribuido \\\midrule
+Arquitectura & Master, volúmenes, Filer y S3; metadatos propios. & Conjuntos de codificación y pools de servidores. \\
+Redundancia & Dos copias completas con \texttt{001} en mi laboratorio. & Fragmentos de datos y paridad Reed--Solomon por objeto. \\
+Ubicación & Filer/S3 ocultan destino; API binaria expone ubicación. & Bucket/clave ocultan los discos de los fragmentos. \\
+Consistencia y CAP & Exige copias en la escritura documentada; asignación rechazada en mi caída. & Declara consistencia tras escritura; operaciones limitadas sin quórum. \\
+PACELC & Esperar copias añade coordinación; sin medición comparativa. & Quórums y codificación añaden trabajo; sin medición propia. \\
+Comunicación & HTTP/JSON, gRPC y coordinación entre roles. & S3 y coordinación dentro del conjunto de almacenamiento. \\
+Recuperación & Reinicio del mismo nodo verificado; no disco vacío. & Reparación documentada con fragmentos disponibles; no ejecutada. \\
+Escalabilidad & Agregar servidores exige revisar cupos y política. & Expansión por pools manteniendo quórums y paridad. \\\bottomrule
+\end{tabularx}\end{center}
+No comparo tolerancia contando nodos sin igualar recursos y pol\'iticas. Los estudios citados eval\'uan cargas espec\'ificas\cite{astsatryan2025,astsatryan2026,chung2026}; sus resultados no se generalizan a mi equipo.
 
 \section{Postura crítica}
-\pendiente{Argumentar fortalezas, limitaciones y contextos en los que SeaweedFS no sería la mejor opción, con respaldo documental y experimental.}
+Valoro la modularidad de SeaweedFS para combinar archivos, objetos binarios y S3, pero exige proteger cada dependencia: dos copias de datos no resuelven una única base de metadatos ni el fallo del anfitrión. No elegiría este laboratorio para producción con continuidad ante pérdida del equipo. El HTTP 406 conserva la política de dos copias a costa de nuevas asignaciones; esa restricción debe ser visible para la aplicación.
+
+El fallo inicial de cupos mostró que pocos bytes almacenados no garantizan volúmenes asignables. Antes de atribuir un error a consistencia revisaría crecimiento, capacidad y topología. Para una necesidad centrada en objetos S3 con codificación por objeto evaluaría MinIO; para combinar interfaces, SeaweedFS ofrece una composición útil\cite{seaweedfs,minio2025}. Exigiría pruebas de recuperación y cargas equivalentes antes de elegir.
 
 \section{Conclusiones}
-\pendiente{Formular conclusiones concretas derivadas del análisis y de resultados efectivamente obtenidos.}
+Concluyo que la transparencia depende de la interfaz y que, en el fallo ensayado, continuó la lectura previa pero no una nueva asignación con dos copias. Recuperar el nodo restableció esa capacidad. La prueba respalda disponibilidad por operación; no demuestra CAP, rendimiento superior ni reconstrucción tras pérdida de disco. Mi elección dependería de garantías, dominio de fallo y esfuerzo operativo, no solo del número de servidores.
 
 \section{Declaración de uso de inteligencia artificial}
-Utilicé Codex para la revisión inicial del proyecto y la preparación de la estructura de carpetas, el README, la bitácora, el archivo de exclusiones de Git y la plantilla de LaTeX. En esta etapa no se generaron referencias académicas, evidencias ni resultados experimentales.
-\pendiente{Antes de entregar, completar el modelo o versión, los usos posteriores y los procedimientos de verificación efectivamente realizados. La declaración debe reflejar el uso total de IA durante el proyecto.}
+Utilicé Codex con el modelo indicado GPT-6.1 Sol para organizar el proyecto, contrastar fuentes, configurar y ejecutar el laboratorio y asistir en la redacción, interpretación, comparación y conclusiones. Utilicé su guía para el bosquejo y su apoyo para imágenes y LaTeX. Aporté experiencias y capturas; respaldé el análisis con respuestas HTTP, estados, hashes y contraste con PDF, Crossref y páginas editoriales. Enlacé mi explicación oral.
 
-% Habilitar con biblatex y las referencias verificadas:
-% \printbibliography[title={Referencias}]
-\section*{Referencias}
-\pendiente{Incorporar mediante biblatex al menos seis fuentes de los últimos cinco años, incluidas tres de revistas indexadas con DOI comprobado y metadatos coincidentes.}
+\clearpage
+\begingroup\small
+\setlength{\bibitemsep}{4pt}
+\printbibliography[title={Referencias}]
+\endgroup
 
+\clearpage
 \appendix
 \section{Esquema inicial a mano}
-\pendiente{Incluir la fotografía original del dibujo realizado por el estudiante, con su nombre y fecha visibles.}
+En el bosquejo representé las conexiones principales; el diagrama digital precisa roles, flujos y replicación. La fotografía conserva mi nombre y la fecha visibles.
+\begin{center}
+\includegraphics[width=\linewidth,height=21cm,keepaspectratio]{../figuras/esquema_mano.jpg}
+\captionof{figure}{Bosquejo original con nombre y fecha 14/11/2026.}
+\end{center}
 
+\clearpage
 \section{Lectura de las fuentes}
-\pendiente{Incluir al menos tres capturas de artículos con anotaciones personales, número de página y correspondencia con citas del informe.}
-
+Conservo las tres capturas originales completas y los PDF en \texttt{evidencias/fuentes/}. Indico sus páginas y la relación con las citas del análisis.
+\par\medskip\small\noindent\begin{tabular}{@{}p{0.47\textwidth}@{\hspace{0.03\textwidth}}p{0.49\textwidth}@{}}
+\textbf{Replicación y codificación.} BE-DSN\cite{hameed2025}, página 2 del PDF; sección de tolerancia a fallos.
+\begin{center}
+\includegraphics[width=\linewidth,height=6.8cm,keepaspectratio]{../evidencias/fuentes/BE-DSN_leveraging_blockchain_for_improving_data_availability_and_security_in_distributed_storage_networks.png}
+\captionof{figure}{Costes de almacenamiento y cómputo de replicar y codificar.}
+\end{center}
+&
+\textbf{Compatibilidad S3.} Building a modern data platform based on the data lakehouse architecture and cloud-native ecosystem\cite{abouzaid2025}, página 9 del PDF; análisis comparativo.
+\begin{center}
+\includegraphics[width=\linewidth,height=6.8cm,keepaspectratio]{../evidencias/fuentes/Building_a_modern_data_platform_based_on_the_data_lakehouse_architecture_and_cloud-native_ecosystem.png}
+\captionof{figure}{Integración de MinIO mediante S3.}
+\end{center}
+\textbf{Comunicación.} DITIS: An End-to-End System-Level Simulator and Optimizer for Distributed Tiered Storage\cite{lucasfilho2025}, página 1 del PDF; modelos de comunicación.
+\begin{center}
+\includegraphics[width=\linewidth,height=6.8cm,keepaspectratio]{../evidencias/fuentes/DITIS_An_End-to-End_System-Level_Simulator_and_Optimizer_for_Distributed_Tiered_Storage.png}
+\captionof{figure}{Mensajes síncronos y asíncronos en el modelo de actores de DITIS.}
+\end{center}
+\end{tabular}
 \end{document}
