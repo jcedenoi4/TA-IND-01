@@ -1,0 +1,397 @@
+[2026-11-14T16:10:12-05:00] ENTORNO: {"usuario": "User Program", "equipo": "DESKTOP-GTVSQ58", "sistema": "Windows-11-10.0.26200-SP0", "python": "3.14.7", "zona": "America/Guayaquil UTC-05:00", "ejecucion": "20261114T161012710281"}
+[2026-11-14T16:10:12-05:00] COMANDO: docker version
+[2026-11-14T16:10:12-05:00] SALIDA:
+Client:
+ Version:           29.7.2
+ API version:       1.55
+ Go version:        go1.26.5
+ Git commit:        a7dcaa6
+ Built:             Wed Aug  5 18:31:33 2026
+ OS/Arch:           windows/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.89.0 (238018)
+ Engine:
+  Version:          29.7.2
+  API version:      1.55 (minimum version 1.40)
+  Go version:       go1.26.5
+  Git commit:       6a43e3d
+  Built:            Wed Aug  5 18:28:36 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.3.3
+  GitCommit:        aad11006b869517fcd3009450b6f82da282e1a9b
+ runc:
+  Version:          1.4.3
+  GitCommit:        v1.4.3-0-gbb14dabe
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+[2026-11-14T16:10:12-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:12-05:00] COMANDO: docker compose version
+[2026-11-14T16:10:12-05:00] SALIDA:
+Docker Compose version v5.5.0
+
+[2026-11-14T16:10:12-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:12-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" config --quiet
+[2026-11-14T16:10:13-05:00] SALIDA:
+
+[2026-11-14T16:10:13-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:13-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:10:13-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED          STATUS          PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     3 minutes ago    Up 3 minutes    127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    16 seconds ago   Up 12 seconds   127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        3 minutes ago    Up 3 minutes    127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   16 seconds ago   Up 11 seconds   127.0.0.1:8080->8080/tcp
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   16 seconds ago   Up 11 seconds   127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:10:13-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:13-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" exec -T master weed version
+[2026-11-14T16:10:13-05:00] SALIDA:
+version 30GB 3.85 7d7e06681 linux amd64
+
+[2026-11-14T16:10:13-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:13-05:00] COMANDO: docker image inspect chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22 --format "{{.Id}} {{json .RepoDigests}}"
+[2026-11-14T16:10:13-05:00] SALIDA:
+sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22 ["chrislusf/seaweedfs@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22"]
+
+[2026-11-14T16:10:13-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:13-05:00] HTTP GET http://127.0.0.1:9333/dir/status
+[2026-11-14T16:10:21-05:00] HTTP_STATUS: 200; duracion_s=7.7792
+[2026-11-14T16:10:21-05:00] CUERPO: {"Topology":{"Max":128,"Free":112,"DataCenters":[{"Id":"dc1","Racks":[{"Id":"rack1","DataNodes":[{"Url":"volume1:8080","PublicUrl":"volume1:8080","Volumes":8,"EcShards":0,"Max":64,"VolumeIds":" 1-8"},{"Url":"volume2:8080","PublicUrl":"volume2:8080","Volumes":8,"EcShards":0,"Max":64,"VolumeIds":" 1-8"}]}]}],"Layouts":[{"replication":"001","ttl":"","writables":[3,2,1,5,4,6],"collection":"base20261114t160821039874","diskType":"hdd"},{"replication":"001","ttl":"","writables":[8,7],"collection":"ta-ind-01-20261114t160821039874","diskType":"hdd"}]},"Version":"30GB 3.85 7d7e06681"}
+[2026-11-14T16:10:21-05:00] ETAPA 1: escritura y comprobacion directa de ambas replicas
+[2026-11-14T16:10:21-05:00] SHA256_ESPERADO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:21-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=base20261114t161012710281
+[2026-11-14T16:10:21-05:00] HTTP_STATUS: 200; duracion_s=0.2044
+[2026-11-14T16:10:21-05:00] CUERPO: {"fid":"9,035121a898","url":"volume1:8080","publicUrl":"volume1:8080","count":1}
+[2026-11-14T16:10:21-05:00] VERIFICACION_OK: Asignacion inicial con dos servidores
+[2026-11-14T16:10:21-05:00] HTTP POST http://127.0.0.1:8080/9,035121a898
+[2026-11-14T16:10:21-05:00] HTTP_STATUS: 201; duracion_s=0.0062
+[2026-11-14T16:10:21-05:00] CUERPO: {"name":"prueba.txt","size":112,"eTag":"39261946","mime":"text/plain"}
+[2026-11-14T16:10:21-05:00] VERIFICACION_OK: Carga inicial
+[2026-11-14T16:10:21-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=9
+[2026-11-14T16:10:21-05:00] HTTP_STATUS: 200; duracion_s=0.0157
+[2026-11-14T16:10:21-05:00] CUERPO: {"volumeOrFileId":"9","locations":[{"url":"volume1:8080","publicUrl":"volume1:8080","dataCenter":"dc1","grpcPort":18080},{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:10:21-05:00] HTTP GET http://127.0.0.1:8080/9,035121a898
+[2026-11-14T16:10:21-05:00] HTTP_STATUS: 200; duracion_s=0.003
+[2026-11-14T16:10:21-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:21-05:00] SHA256_OBTENIDO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:21-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:10:21-05:00] HTTP GET http://127.0.0.1:8081/9,035121a898
+[2026-11-14T16:10:21-05:00] HTTP_STATUS: 200; duracion_s=0.0027
+[2026-11-14T16:10:21-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:21-05:00] SHA256_OBTENIDO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:21-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:10:21-05:00] PRUEBA COMPLEMENTARIA: acceso por S3 y Filer
+[2026-11-14T16:10:21-05:00] HTTP PUT http://127.0.0.1:8333/ta-ind-01-20261114t161012710281
+[2026-11-14T16:10:21-05:00] HTTP_STATUS: 200; duracion_s=0.3639
+[2026-11-14T16:10:21-05:00] CUERPO: 
+[2026-11-14T16:10:21-05:00] VERIFICACION_OK: Creacion de bucket S3 local
+[2026-11-14T16:10:21-05:00] HTTP PUT http://127.0.0.1:8333/ta-ind-01-20261114t161012710281/prueba.txt
+[2026-11-14T16:10:22-05:00] HTTP_STATUS: 200; duracion_s=0.2122
+[2026-11-14T16:10:22-05:00] CUERPO: 
+[2026-11-14T16:10:22-05:00] VERIFICACION_OK: Escritura S3 local
+[2026-11-14T16:10:22-05:00] HTTP GET http://127.0.0.1:8333/ta-ind-01-20261114t161012710281/prueba.txt
+[2026-11-14T16:10:22-05:00] HTTP_STATUS: 200; duracion_s=0.0053
+[2026-11-14T16:10:22-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:22-05:00] VERIFICACION_OK: Lectura S3 identica
+[2026-11-14T16:10:22-05:00] HTTP GET http://127.0.0.1:8888/buckets/ta-ind-01-20261114t161012710281/prueba.txt
+[2026-11-14T16:10:22-05:00] HTTP_STATUS: 200; duracion_s=0.0054
+[2026-11-14T16:10:22-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:22-05:00] VERIFICACION_OK: Lectura mediante Filer identica
+[2026-11-14T16:10:22-05:00] ETAPA 2: detencion controlada de volume1 (no particion de red)
+[2026-11-14T16:10:22-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" stop -t 5 volume1
+[2026-11-14T16:10:27-05:00] SALIDA:
+ Container ta-ind-01-seaweedfs-volume1-1 Stopping 
+ Container ta-ind-01-seaweedfs-volume1-1 Stopped 
+
+[2026-11-14T16:10:27-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:27-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:10:27-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED          STATUS                                PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     4 minutes ago    Up 3 minutes                          127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    30 seconds ago   Up 26 seconds                         127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        4 minutes ago    Up 3 minutes                          127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   30 seconds ago   Exited (137) Less than a second ago   
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   30 seconds ago   Up 26 seconds                         127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:10:27-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:27-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=9
+[2026-11-14T16:10:27-05:00] HTTP_STATUS: 200; duracion_s=0.0045
+[2026-11-14T16:10:27-05:00] CUERPO: {"volumeOrFileId":"9","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:10:27-05:00] HTTP GET http://127.0.0.1:8081/9,035121a898
+[2026-11-14T16:10:27-05:00] HTTP_STATUS: 200; duracion_s=0.0035
+[2026-11-14T16:10:27-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:27-05:00] SHA256_OBTENIDO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:27-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:10:27-05:00] HTTP GET http://127.0.0.1:9333/dir/status
+[2026-11-14T16:10:27-05:00] HTTP_STATUS: 200; duracion_s=0.0028
+[2026-11-14T16:10:27-05:00] CUERPO: {"Topology":{"Max":64,"Free":53,"DataCenters":[{"Id":"dc1","Racks":[{"Id":"rack1","DataNodes":[{"Url":"volume2:8080","PublicUrl":"volume2:8080","Volumes":11,"EcShards":0,"Max":64,"VolumeIds":" 1-11"}]}]}],"Layouts":[{"replication":"001","ttl":"","writables":[],"collection":"base20261114t160821039874","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"ta-ind-01-20261114t160821039874","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"base20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"ta-ind-01-20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"","diskType":"hdd"}]},"Version":"30GB 3.85 7d7e06681"}
+[2026-11-14T16:10:27-05:00] HTTP GET http://127.0.0.1:8333/ta-ind-01-20261114t161012710281/prueba.txt
+[2026-11-14T16:10:27-05:00] HTTP_STATUS: 200; duracion_s=0.0066
+[2026-11-14T16:10:27-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:27-05:00] VERIFICACION_OK: Lectura S3 del objeto previo con volume1 detenido
+[2026-11-14T16:10:27-05:00] ETAPA 3: intento de asignar NUEVA coleccion con replication=001 y un solo servidor
+[2026-11-14T16:10:27-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=degradado20261114t161012710281
+[2026-11-14T16:10:37-05:00] HTTP_STATUS: 406; duracion_s=10.0462
+[2026-11-14T16:10:37-05:00] CUERPO: {"error":"failed to find writable volumes for collection:degradado20261114t161012710281 replication:001 ttl: error: No writable volumes"}
+[2026-11-14T16:10:37-05:00] VERIFICACION_OK: Nueva asignacion rechazada: no hay dos servidores para replication=001
+[2026-11-14T16:10:37-05:00] ETAPA 4: reinicio del mismo volume1 con sus datos persistentes
+[2026-11-14T16:10:37-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" start volume1
+[2026-11-14T16:10:38-05:00] SALIDA:
+ Container ta-ind-01-seaweedfs-volume1-1 Starting 
+ Container ta-ind-01-seaweedfs-volume1-1 Started 
+
+[2026-11-14T16:10:38-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:38-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=9
+[2026-11-14T16:10:38-05:00] HTTP_STATUS: 200; duracion_s=0.0028
+[2026-11-14T16:10:38-05:00] CUERPO: {"volumeOrFileId":"9","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080},{"url":"volume1:8080","publicUrl":"volume1:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:10:38-05:00] HTTP GET http://127.0.0.1:8080/9,035121a898
+[2026-11-14T16:10:38-05:00] HTTP_STATUS: 200; duracion_s=0.0043
+[2026-11-14T16:10:38-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:38-05:00] SHA256_OBTENIDO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:38-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:10:38-05:00] HTTP GET http://127.0.0.1:8081/9,035121a898
+[2026-11-14T16:10:38-05:00] HTTP_STATUS: 200; duracion_s=0.0022
+[2026-11-14T16:10:38-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:38-05:00] SHA256_OBTENIDO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:38-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:10:38-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=recuperado20261114t161012710281
+[2026-11-14T16:10:38-05:00] HTTP_STATUS: 200; duracion_s=0.2038
+[2026-11-14T16:10:38-05:00] CUERPO: {"fid":"12,07666a6961","url":"volume1:8080","publicUrl":"volume1:8080","count":1}
+[2026-11-14T16:10:38-05:00] VERIFICACION_OK: Nueva asignacion tras reiniciar volume1
+[2026-11-14T16:10:38-05:00] HTTP POST http://127.0.0.1:8080/12,07666a6961
+[2026-11-14T16:10:38-05:00] HTTP_STATUS: 201; duracion_s=0.0076
+[2026-11-14T16:10:38-05:00] CUERPO: {"name":"prueba.txt","size":112,"eTag":"39261946","mime":"text/plain"}
+[2026-11-14T16:10:38-05:00] VERIFICACION_OK: Nueva escritura tras recuperacion
+[2026-11-14T16:10:38-05:00] HTTP GET http://127.0.0.1:8080/12,07666a6961
+[2026-11-14T16:10:38-05:00] HTTP_STATUS: 200; duracion_s=0.0027
+[2026-11-14T16:10:38-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:38-05:00] SHA256_OBTENIDO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:38-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:10:38-05:00] HTTP GET http://127.0.0.1:8081/12,07666a6961
+[2026-11-14T16:10:38-05:00] HTTP_STATUS: 200; duracion_s=0.0028
+[2026-11-14T16:10:38-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161012710281
+
+[2026-11-14T16:10:38-05:00] SHA256_OBTENIDO: 0b7ea475835b0cc222d35ddd38229227661dcde50bcbf4a0278498cf6c1fd90f
+[2026-11-14T16:10:38-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:10:38-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:10:38-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED          STATUS                  PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     4 minutes ago    Up 4 minutes            127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    41 seconds ago   Up 37 seconds           127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        4 minutes ago    Up 4 minutes            127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   41 seconds ago   Up Less than a second   127.0.0.1:8080->8080/tcp
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   41 seconds ago   Up 37 seconds           127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:10:38-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:38-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" logs --no-color --tail 35 master volume1 volume2 filer s3
+[2026-11-14T16:10:38-05:00] SALIDA:
+master-1   | I1114 21:10:38.302739 master_grpc_server.go:141 added volume server 0: volume1:8080 [35362435-288b-472d-85fa-10f8b7cdbb12]
+filer-1    | I1114 21:06:44.074577 configuration.go:28 configured filer store to leveldb2
+volume1-1  | I1114 21:10:38.300028 volume_loading.go:157 loading memory index /data/ta-ind-01-20261114t161012710281_10.idx to memory
+filer-1    | I1114 21:06:44.075194 master_client.go:20 the cluster has 1 filer
+filer-1    | I1114 21:06:44.075222 filer_server.go:201 filer:8888 bootstrap from peers [node_type:"filer"  address:"filer:8888"  is_add:true  created_at_ns:1794690404038728111]
+filer-1    | I1114 21:06:44.075326 filer.go:112 filer:8888 aggregate from peers [filer:8888]
+filer-1    | I1114 21:06:44.077231 filer.go:317 Start Seaweed Filer 30GB 3.85 7d7e06681 at filer:8888
+master-1   | I1114 21:10:38.302747 master_grpc_server.go:51 found new uuid:volume1:8080 [35362435-288b-472d-85fa-10f8b7cdbb12] , map[volume1:8080:[35362435-288b-472d-85fa-10f8b7cdbb12] volume2:8080:[6a078117-b296-4ab6-b02d-eeb9835d436f]]
+filer-1    | I1114 21:06:44.077315 meta_aggregator.go:76 loopSubscribeToOneFiler read filer:8888 start from 2026-11-14 21:05:44.075215691 +0000 UTC 1794690344075215691
+master-1   | I1114 21:10:38.302896 volume_layout.go:417 Volume 4 becomes writable
+master-1   | I1114 21:10:38.302919 volume_layout.go:417 Volume 1 becomes writable
+master-1   | I1114 21:10:38.302924 volume_layout.go:417 Volume 7 becomes writable
+filer-1    | I1114 21:06:44.078623 meta_aggregator.go:178 subscribing remote filer:8888 meta change: 2026-11-14 21:05:44.075215691 +0000 UTC, clientId:1386683783
+master-1   | I1114 21:10:38.302927 volume_layout.go:417 Volume 5 becomes writable
+master-1   | I1114 21:10:38.302930 volume_layout.go:417 Volume 8 becomes writable
+volume1-1  | I1114 21:10:38.300115 volume_loading.go:157 loading memory index /data/base20261114t160821039874_1.idx to memory
+master-1   | I1114 21:10:38.302934 volume_layout.go:417 Volume 6 becomes writable
+master-1   | I1114 21:10:38.302940 volume_layout.go:417 Volume 10 becomes writable
+master-1   | I1114 21:10:38.302945 volume_layout.go:417 Volume 11 becomes writable
+s3-1       | I1114 21:06:28.652715 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+filer-1    | I1114 21:06:44.079515 filer_grpc_server_sub_meta.go:314 + local listener filer:filer:8888@172.18.0.5:41122 clientId -1386683783 clientEpoch 1
+volume2-1  | I1114 21:10:21.312051 disk_location.go:183 data file /data/base20261114t160821039874_3.dat, replication=001 v=3 size=8 ttl=
+master-1   | I1114 21:10:38.302948 volume_layout.go:417 Volume 3 becomes writable
+master-1   | I1114 21:10:38.302954 volume_layout.go:417 Volume 2 becomes writable
+s3-1       | I1114 21:06:29.656111 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:10:38.302959 volume_layout.go:417 Volume 9 becomes writable
+master-1   | I1114 21:10:38.302967 master_grpc_server.go:204 master see new volume 4 from volume1:8080
+master-1   | I1114 21:10:38.302972 master_grpc_server.go:204 master see new volume 1 from volume1:8080
+volume1-1  | I1114 21:10:38.300162 disk_location.go:183 data file /data/ta-ind-01-20261114t161012710281_10.dat, replication=001 v=3 size=208 ttl=
+volume1-1  | I1114 21:10:38.300195 volume_loading.go:98 readSuperBlock volume 3 version 3
+volume1-1  | I1114 21:10:38.300217 disk_location.go:183 data file /data/base20261114t160821039874_1.dat, replication=001 v=3 size=216 ttl=
+master-1   | I1114 21:10:38.302975 master_grpc_server.go:204 master see new volume 7 from volume1:8080
+volume1-1  | I1114 21:10:38.300234 volume_loading.go:139 checking volume data integrity for volume 3
+master-1   | I1114 21:10:38.302977 master_grpc_server.go:204 master see new volume 5 from volume1:8080
+master-1   | I1114 21:10:38.302985 master_grpc_server.go:204 master see new volume 8 from volume1:8080
+volume2-1  | I1114 21:10:21.311978 disk_location.go:183 data file /data/ta-ind-01-20261114t160821039874_7.dat, replication=001 v=3 size=8 ttl=
+volume2-1  | I1114 21:10:21.312082 volume_loading.go:98 readSuperBlock volume 2 version 3
+volume2-1  | I1114 21:10:21.312100 volume_loading.go:139 checking volume data integrity for volume 2
+filer-1    | I1114 21:06:44.079540 filer_grpc_server_sub_meta.go:133  + filer:filer:8888@172.18.0.5:41122 local subscribe / from 2026-11-14 21:05:44.075215691 +0000 UTC clientId:-1386683783
+volume1-1  | I1114 21:10:38.300241 volume_loading.go:157 loading memory index /data/base20261114t160821039874_3.idx to memory
+volume1-1  | I1114 21:10:38.300242 volume_loading.go:98 readSuperBlock volume 2 version 3
+s3-1       | I1114 21:06:30.660077 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300253 volume_loading.go:98 readSuperBlock volume 7 version 3
+volume1-1  | I1114 21:10:38.300254 volume_loading.go:139 checking volume data integrity for volume 2
+s3-1       | I1114 21:06:31.664092 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+filer-1    | I1114 21:06:44.079559 filer_grpc_server_sub_meta.go:146 read on disk filer:filer:8888@172.18.0.5:41122 local subscribe / from 2026-11-14 21:05:44.075215691 +0000 UTC
+volume2-1  | I1114 21:10:21.312102 volume_loading.go:98 readSuperBlock volume 8 version 3
+s3-1       | I1114 21:06:32.668484 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume2-1  | I1114 21:10:21.312108 volume_loading.go:157 loading memory index /data/base20261114t160821039874_2.idx to memory
+s3-1       | I1114 21:06:33.671593 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:10:38.303008 master_grpc_server.go:204 master see new volume 6 from volume1:8080
+volume1-1  | I1114 21:10:38.300256 volume_loading.go:98 readSuperBlock volume 5 version 3
+master-1   | I1114 21:10:38.303011 master_grpc_server.go:204 master see new volume 10 from volume1:8080
+master-1   | I1114 21:10:38.303013 master_grpc_server.go:204 master see new volume 11 from volume1:8080
+filer-1    | I1114 21:06:44.079590 filer_grpc_server_sub_meta.go:165 read in memory filer:filer:8888@172.18.0.5:41122 local subscribe / from 2026-11-14 21:05:44.075215691 +0000 UTC
+filer-1    | I1114 21:06:44.707217 filer_grpc_server_sub_meta.go:314 +  listener s3@172.18.0.3:49084 clientId 1452762031 clientEpoch 2
+volume2-1  | I1114 21:10:21.312116 volume_loading.go:139 checking volume data integrity for volume 8
+filer-1    | I1114 21:06:44.707244 filer_grpc_server_sub_meta.go:43  s3@172.18.0.3:49084 starts to subscribe /etc/ from 2026-11-14 21:06:44.703535454 +0000 UTC
+volume2-1  | I1114 21:10:21.312147 disk_location.go:183 data file /data/base20261114t160821039874_2.dat, replication=001 v=3 size=8 ttl=
+s3-1       | I1114 21:06:34.675816 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300262 volume_loading.go:157 loading memory index /data/base20261114t160821039874_2.idx to memory
+s3-1       | I1114 21:06:35.678112 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300200 disk_location.go:183 data file /data/11.dat, replication=001 v=3 size=576 ttl=
+s3-1       | I1114 21:06:36.682061 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume2-1  | I1114 21:10:21.312150 volume_loading.go:157 loading memory index /data/ta-ind-01-20261114t160821039874_8.idx to memory
+s3-1       | I1114 21:06:37.685323 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300267 volume_loading.go:139 checking volume data integrity for volume 7
+s3-1       | I1114 21:06:38.687179 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:39.689150 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300271 volume_loading.go:139 checking volume data integrity for volume 5
+s3-1       | I1114 21:06:40.691728 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300274 volume_loading.go:157 loading memory index /data/ta-ind-01-20261114t160821039874_7.idx to memory
+volume2-1  | I1114 21:10:21.312273 disk_location.go:183 data file /data/ta-ind-01-20261114t160821039874_8.dat, replication=001 v=3 size=216 ttl=
+volume1-1  | I1114 21:10:38.300279 volume_loading.go:157 loading memory index /data/base20261114t160821039874_5.idx to memory
+volume2-1  | I1114 21:10:21.312302 disk_location.go:239 Store started on dir: /data with 8 volumes max 64
+volume1-1  | I1114 21:10:38.300259 disk_location.go:183 data file /data/base20261114t160821039874_3.dat, replication=001 v=3 size=8 ttl=
+volume2-1  | I1114 21:10:21.312431 disk_location.go:242 Store started on dir: /data with 0 ec shards
+s3-1       | I1114 21:06:41.693823 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300282 disk_location.go:183 data file /data/base20261114t160821039874_2.dat, replication=001 v=3 size=8 ttl=
+s3-1       | I1114 21:06:42.695754 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume1-1  | I1114 21:10:38.300396 disk_location.go:183 data file /data/base20261114t160821039874_5.dat, replication=001 v=3 size=8 ttl=
+volume2-1  | I1114 21:10:21.312654 volume_grpc_client_to_master.go:52 Volume server start with seed master nodes: [master:9333]
+volume1-1  | I1114 21:10:38.300425 volume_loading.go:98 readSuperBlock volume 9 version 3
+s3-1       | I1114 21:06:43.698661 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:44.703475 s3.go:213 S3 read filer buckets dir: /buckets
+s3-1       | I1114 21:06:44.703504 s3.go:220 connected to filer filer:8888 grpc address filer:18888
+s3-1       | W1114 21:06:44.704146 auth_credentials.go:131 fail to load config: read S3 config: filer: no entry is found in filer store
+volume2-1  | I1114 21:10:21.312970 volume.go:381 Start Seaweed volume server 30GB 3.85 7d7e06681 at 0.0.0.0:8080
+s3-1       | I1114 21:06:44.704630 s3api_circuit_breaker.go:35 s3 circuit breaker not configured
+volume2-1  | I1114 21:10:21.314149 volume_grpc_client_to_master.go:109 Heartbeat to: master:9333
+volume1-1  | I1114 21:10:38.300297 disk_location.go:183 data file /data/ta-ind-01-20261114t160821039874_7.dat, replication=001 v=3 size=8 ttl=
+volume1-1  | I1114 21:10:38.300490 volume_loading.go:139 checking volume data integrity for volume 9
+volume1-1  | I1114 21:10:38.300692 volume_loading.go:157 loading memory index /data/base20261114t161012710281_9.idx to memory
+master-1   | I1114 21:10:38.303015 master_grpc_server.go:204 master see new volume 3 from volume1:8080
+volume2-1  | I1114 21:10:21.389788 store.go:169 In dir /data adds volume:9 collection:base20261114t161012710281 replicaPlacement:001 ttl:
+master-1   | I1114 21:10:38.303018 master_grpc_server.go:204 master see new volume 2 from volume1:8080
+volume2-1  | I1114 21:10:21.390274 volume_loading.go:139 checking volume data integrity for volume 9
+s3-1       | I1114 21:06:44.706134 s3.go:369 Start Seaweed S3 API Server 30GB 3.85 7d7e06681 at http port 8333
+filer-1    | I1114 21:08:38.526367 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+s3-1       | I1114 21:08:22.138134 auth_credentials_subscribe.go:84 updated bucketMetadata /buckets/name:"ta-ind-01-20261114t160821039874"  is_directory:true  attributes:{mtime:1794690502  file_mode:2147484159  crtime:1794690502}
+master-1   | I1114 21:10:38.303020 master_grpc_server.go:204 master see new volume 9 from volume1:8080
+filer-1    | I1114 21:08:49.303723 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+master-1   | I1114 21:10:38.320478 master_server_handlers.go:146 dirAssign volume growth {"collection":"recuperado20261114t161012710281","replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432} from 172.18.0.1:40580
+filer-1    | I1114 21:09:00.081777 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+master-1   | I1114 21:10:38.320517 master_grpc_server_volume.go:141 volume grow &{Option:{"collection":"recuperado20261114t161012710281","replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432} Count:0 Force:false Reason:http assign}
+volume1-1  | I1114 21:10:38.300823 disk_location.go:183 data file /data/base20261114t161012710281_9.dat, replication=001 v=3 size=184 ttl=
+volume2-1  | I1114 21:10:21.390299 volume_loading.go:157 loading memory index /data/base20261114t161012710281_9.idx to memory
+volume2-1  | I1114 21:10:21.391876 store.go:173 add volume 9
+volume2-1  | I1114 21:10:21.391996 volume_grpc_client_to_master.go:189 volume server volume2:8080 adds volume 9
+volume2-1  | I1114 21:10:21.991501 store.go:169 In dir /data adds volume:10 collection:ta-ind-01-20261114t161012710281 replicaPlacement:001 ttl:
+volume2-1  | I1114 21:10:21.992177 volume_loading.go:139 checking volume data integrity for volume 10
+volume2-1  | I1114 21:10:21.992201 volume_loading.go:157 loading memory index /data/ta-ind-01-20261114t161012710281_10.idx to memory
+volume1-1  | I1114 21:10:38.300857 disk_location.go:239 Store started on dir: /data with 11 volumes max 64
+filer-1    | I1114 21:09:10.862103 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+master-1   | I1114 21:10:38.325121 volume_growth.go:269 Created Volume 12 on topo:dc1:rack1:volume1:8080
+filer-1    | I1114 21:09:21.644511 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+master-1   | I1114 21:10:38.325152 volume_layout.go:229 volume 12 does not have enough copies
+volume2-1  | I1114 21:10:21.994785 store.go:173 add volume 10
+master-1   | I1114 21:10:38.325159 volume_layout.go:237 volume 12 remove from writable
+master-1   | I1114 21:10:38.328750 volume_growth.go:269 Created Volume 12 on topo:dc1:rack1:volume2:8080
+master-1   | I1114 21:10:38.328865 volume_layout.go:229 volume 12 does not have enough copies
+volume1-1  | I1114 21:10:38.301005 disk_location.go:242 Store started on dir: /data with 0 ec shards
+volume1-1  | I1114 21:10:38.301151 volume_grpc_client_to_master.go:52 Volume server start with seed master nodes: [master:9333]
+volume1-1  | I1114 21:10:38.301519 volume.go:381 Start Seaweed volume server 30GB 3.85 7d7e06681 at 0.0.0.0:8080
+volume1-1  | I1114 21:10:38.302196 volume_grpc_client_to_master.go:109 Heartbeat to: master:9333
+volume1-1  | I1114 21:10:38.322281 store.go:169 In dir /data adds volume:12 collection:recuperado20261114t161012710281 replicaPlacement:001 ttl:
+volume1-1  | I1114 21:10:38.322747 volume_loading.go:139 checking volume data integrity for volume 12
+volume1-1  | I1114 21:10:38.322779 volume_loading.go:157 loading memory index /data/recuperado20261114t161012710281_12.idx to memory
+master-1   | I1114 21:10:38.328874 volume_layout.go:237 volume 12 remove from writable
+master-1   | I1114 21:10:38.328884 volume_growth.go:282 Registered Volume 12 on topo:dc1:rack1:volume1:8080
+volume1-1  | I1114 21:10:38.324741 store.go:173 add volume 12
+volume2-1  | I1114 21:10:21.994881 volume_grpc_client_to_master.go:189 volume server volume2:8080 adds volume 10
+volume1-1  | I1114 21:10:38.324837 volume_grpc_client_to_master.go:189 volume server volume1:8080 adds volume 12
+s3-1       | I1114 21:10:21.984821 auth_credentials_subscribe.go:84 updated bucketMetadata /buckets/name:"ta-ind-01-20261114t161012710281"  is_directory:true  attributes:{mtime:1794690621  file_mode:2147484159  crtime:1794690621}
+filer-1    | I1114 21:09:32.413768 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:09:43.189731 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:09:53.961286 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:09:57.357595 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unavailable desc = error reading from server: EOF
+filer-1    | I1114 21:09:57.357595 masterclient.go:243 .filer masterClient failed to receive from master:9333: rpc error: code = Unavailable desc = error reading from server: EOF
+filer-1    | ..............................................................................................................................................................................................................................................................I1114 21:10:21.895265 masterclient.go:265 + filer@filer:8888 noticed .filer filer:8888
+filer-1    | I1114 21:10:21.895312 lock_ring.go:43 add server filer:8888
+volume2-1  | I1114 21:10:22.015235 store.go:169 In dir /data adds volume:11 collection: replicaPlacement:001 ttl:
+volume2-1  | I1114 21:10:22.015831 volume_loading.go:139 checking volume data integrity for volume 11
+filer-1    | I1114 21:10:21.895319 lock_ring.go:47 add server: already exists filer:8888
+filer-1    | I1114 21:10:21.895355 meta_aggregator.go:76 loopSubscribeToOneFiler read filer:8888 start from 2026-11-14 21:10:21.895297816 +0000 UTC 1794690621895297816
+filer-1    | I1114 21:10:21.895774 meta_aggregator.go:178 subscribing remote filer:8888 meta change: 2026-11-14 21:10:21.895297816 +0000 UTC, clientId:1386683783
+master-1   | I1114 21:10:38.328950 volume_layout.go:417 Volume 12 becomes writable
+filer-1    | I1114 21:10:21.897017 filer_grpc_server_sub_meta.go:314 + local listener filer:filer:8888@172.18.0.5:49580 clientId -1386683783 clientEpoch 2
+master-1   | I1114 21:10:38.329027 volume_growth.go:282 Registered Volume 12 on topo:dc1:rack1:volume2:8080
+volume2-1  | I1114 21:10:22.015866 volume_loading.go:157 loading memory index /data/11.idx to memory
+volume2-1  | I1114 21:10:22.017910 store.go:173 add volume 11
+volume2-1  | I1114 21:10:22.017974 volume_grpc_client_to_master.go:189 volume server volume2:8080 adds volume 11
+volume2-1  | I1114 21:10:38.325394 store.go:169 In dir /data adds volume:12 collection:recuperado20261114t161012710281 replicaPlacement:001 ttl:
+volume2-1  | I1114 21:10:38.325959 volume_loading.go:139 checking volume data integrity for volume 12
+volume2-1  | I1114 21:10:38.325991 volume_loading.go:157 loading memory index /data/recuperado20261114t161012710281_12.idx to memory
+volume2-1  | I1114 21:10:38.327953 store.go:173 add volume 12
+filer-1    | I1114 21:10:21.897040 filer_grpc_server_sub_meta.go:133  + filer:filer:8888@172.18.0.5:49580 local subscribe / from 2026-11-14 21:10:21.895297816 +0000 UTC clientId:-1386683783
+filer-1    | I1114 21:10:21.897051 filer_grpc_server_sub_meta.go:146 read on disk filer:filer:8888@172.18.0.5:49580 local subscribe / from 2026-11-14 21:10:21.895297816 +0000 UTC
+filer-1    | I1114 21:10:21.897110 filer_grpc_server_sub_meta.go:165 read in memory filer:filer:8888@172.18.0.5:49580 local subscribe / from 2026-11-14 21:10:21.895297816 +0000 UTC
+filer-1    | I1114 21:10:21.897136 filer_grpc_server_sub_meta.go:127 disconnect filer:filer:8888@172.18.0.5:41122 local subscriber / clientId:-1386683783
+filer-1    | I1114 21:10:21.897139 filer_grpc_server_sub_meta.go:330 - local listener filer:filer:8888@172.18.0.5:41122 clientId -1386683783 clientEpoch 1
+filer-1    | I1114 21:10:21.897484 meta_aggregator.go:82 stop subscribing peer filer:8888 meta change
+volume2-1  | I1114 21:10:38.328197 volume_grpc_client_to_master.go:189 volume server volume2:8080 adds volume 12
+
+[2026-11-14T16:10:39-05:00] EXIT_CODE: 0
+[2026-11-14T16:10:39-05:00] RESULTADO: prueba completada; cinco servicios activos. No se tomaron capturas.

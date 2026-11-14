@@ -1,0 +1,790 @@
+[2026-11-14T16:11:23-05:00] ENTORNO: {"usuario": "User Program", "equipo": "DESKTOP-GTVSQ58", "sistema": "Windows-11-10.0.26200-SP0", "python": "3.14.7", "zona": "America/Guayaquil UTC-05:00", "ejecucion": "20261114T161123023940"}
+[2026-11-14T16:11:23-05:00] COMANDO: docker version
+[2026-11-14T16:11:23-05:00] SALIDA:
+Client:
+ Version:           29.7.2
+ API version:       1.55
+ Go version:        go1.26.5
+ Git commit:        a7dcaa6
+ Built:             Wed Aug  5 18:31:33 2026
+ OS/Arch:           windows/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.89.0 (238018)
+ Engine:
+  Version:          29.7.2
+  API version:      1.55 (minimum version 1.40)
+  Go version:       go1.26.5
+  Git commit:       6a43e3d
+  Built:            Wed Aug  5 18:28:36 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.3.3
+  GitCommit:        aad11006b869517fcd3009450b6f82da282e1a9b
+ runc:
+  Version:          1.4.3
+  GitCommit:        v1.4.3-0-gbb14dabe
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+[2026-11-14T16:11:23-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:23-05:00] COMANDO: docker compose version
+[2026-11-14T16:11:23-05:00] SALIDA:
+Docker Compose version v5.5.0
+
+[2026-11-14T16:11:23-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:23-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" config --quiet
+[2026-11-14T16:11:23-05:00] SALIDA:
+
+[2026-11-14T16:11:23-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:23-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:11:24-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED              STATUS              PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     4 minutes ago        Up 4 minutes        127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    About a minute ago   Up About a minute   127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        4 minutes ago        Up 4 minutes        127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   5 seconds ago        Up 1 second         127.0.0.1:8080->8080/tcp
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   5 seconds ago        Up 1 second         127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:11:24-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:24-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" exec -T master weed version
+[2026-11-14T16:11:24-05:00] SALIDA:
+version 30GB 3.85 7d7e06681 linux amd64
+
+[2026-11-14T16:11:24-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:24-05:00] COMANDO: docker image inspect chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22 --format "{{.Id}} {{json .RepoDigests}}"
+[2026-11-14T16:11:24-05:00] SALIDA:
+sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22 ["chrislusf/seaweedfs@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22"]
+
+[2026-11-14T16:11:24-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:24-05:00] ESPERA: dos servidores registrados, cupos disponibles y servicios HTTP listos
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:9333/dir/status
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.0103
+[2026-11-14T16:11:24-05:00] CUERPO: {"Topology":{"Max":128,"Free":104,"DataCenters":[{"Id":"dc1","Racks":[{"Id":"rack1","DataNodes":[{"Url":"volume1:8080","PublicUrl":"volume1:8080","Volumes":12,"EcShards":0,"Max":64,"VolumeIds":" 1-12"},{"Url":"volume2:8080","PublicUrl":"volume2:8080","Volumes":12,"EcShards":0,"Max":64,"VolumeIds":" 1-12"}]}]}],"Layouts":[{"replication":"001","ttl":"","writables":[6,4,2,1,5,3],"collection":"base20261114t160821039874","diskType":"hdd"},{"replication":"001","ttl":"","writables":[9],"collection":"base20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[8,7],"collection":"ta-ind-01-20261114t160821039874","diskType":"hdd"},{"replication":"001","ttl":"","writables":[11],"collection":"","diskType":"hdd"},{"replication":"001","ttl":"","writables":[12],"collection":"recuperado20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":null,"collection":"degradado20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[10],"collection":"ta-ind-01-20261114t161012710281","diskType":"hdd"}]},"Version":"30GB 3.85 7d7e06681"}
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8080/status
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.0041
+[2026-11-14T16:11:24-05:00] CUERPO: {"DiskStatuses":[{"dir":"/data","all":1081101176832,"used":64934440960,"free":1016166735872,"percent_free":93.993675,"percent_used":6.0063243}],"Version":"30GB 3.85 7d7e06681","Volumes":[{"Id":1,"Size":172,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":2,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":3,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":4,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":5,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":6,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":7,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"ta-ind-01-20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":8,"Size":172,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"ta-ind-01-20261114t160821039874","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":9,"Size":144,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t161012710281","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":10,"Size":165,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"ta-ind-01-20261114t161012710281","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":11,"Size":976,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"","Version":3,"FileCount":2,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":12,"Size":144,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"recuperado20261114t161012710281","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""}]}
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8081/status
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.003
+[2026-11-14T16:11:24-05:00] CUERPO: {"DiskStatuses":[{"dir":"/data","all":1081101176832,"used":64934440960,"free":1016166735872,"percent_free":93.993675,"percent_used":6.0063243}],"Version":"30GB 3.85 7d7e06681","Volumes":[{"Id":1,"Size":144,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":2,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":3,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":4,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":5,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":6,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":7,"Size":0,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"ta-ind-01-20261114t160821039874","Version":3,"FileCount":0,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":8,"Size":172,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"ta-ind-01-20261114t160821039874","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":9,"Size":165,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"base20261114t161012710281","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":10,"Size":165,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"ta-ind-01-20261114t161012710281","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":11,"Size":976,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"","Version":3,"FileCount":2,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""},{"Id":12,"Size":165,"ReplicaPlacement":{"node":1},"Ttl":{"Count":0,"Unit":0},"DiskType":"","Collection":"recuperado20261114t161012710281","Version":3,"FileCount":1,"DeleteCount":0,"DeletedByteCount":0,"ReadOnly":false,"CompactRevision":0,"ModifiedAtSecond":0,"RemoteStorageName":"","RemoteStorageKey":""}]}
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8888/
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.0045
+[2026-11-14T16:11:24-05:00] CUERPO: <!DOCTYPE html>
+<html>
+<head>
+    <title>SeaweedFS Filer 30GB 3.85 7d7e06681</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/seaweedfsstatic/bootstrap/3.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-bottom: 128px;
+        }
+
+        #drop-area {
+            border: 1px transparent;
+            margin-top: 5px;
+        }
+
+        #drop-area.highlight {
+            border-color: purple;
+            border: 2px dashed #ccc;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 2px;
+            background: #ccc;
+            cursor: pointer;
+            border-radius: 2px;
+            border: 1px solid #ccc;
+            float: right;
+            margin-left: 2px;
+            margin-bottom: 0;
+        }
+
+        label {
+            font-weight: normal;
+        }
+
+        .button:hover {
+            background: #ddd;
+        }
+
+        #fileElem {
+            display: none;
+        }
+
+        td, th {
+            vertical-align: bottom;
+        }
+
+        .table-hover > tbody > tr:hover > * > div.operations {
+            display: block;
+        }
+
+        .table > tbody > tr {
+            height: 39px;
+        }
+
+        div.operations {
+            display: none;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0px;
+            right: 5%;
+            min-width: 25%;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+        }
+
+        .add-files {
+            font-size: 46px;
+            text-align: center;
+            border: 1px dashed #999;
+            padding-bottom: 9px;
+            margin: 0 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>
+            <a href="https://github.com/seaweedfs/seaweedfs"><img src="/seaweedfsstatic/seaweed50x50.png"></img></a>
+            SeaweedFS Filer <small>30GB 3.85 7d7e06681</small>
+        </h1>
+    </div>
+    <div class="row">
+        <div>
+            <div class="btn-group btn-group-sm pull-right" role="group" style="margin-top:3px;">
+                <label class="btn btn-default" onclick="handleCreateDir()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Folder
+                </label>
+                <label class="btn btn-default" for="fileElem">
+                    <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Upload
+                </label>
+            </div>
+            <ol class="breadcrumb">
+            
+            <li><a href="/">
+                /
+            </a></li>
+            
+            </ol>
+        </div>
+    </div>
+
+    <div class="row" id="drop-area">
+        <form class="upload-form">
+            <input type="file" id="fileElem" multiple onchange="handleFiles(this.files)">
+
+            
+            <table width="100%" class="table table-hover">
+                
+                
+                
+                <tr>
+                    <td>
+                        
+                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;
+                        <a href="/buckets/" >
+                        buckets
+                        </a>
+                        
+                    </td>
+                    <td align="right" nowrap>
+                        
+                    </td>
+                    <td align="right" nowrap>
+                        
+                    </td>
+                    <td align="right" nowrap>
+                        2026-11-14 21:08
+                    </td>
+                    <td style="width:75px">
+                        <div class="btn-group btn-group-xs pull-right operations" role="group">
+                            <label class="btn" onclick="handleRename('buckets', '\/')">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </label>
+                            
+                            <label class="btn" onclick="handleDelete('\/buckets\/')">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </label>
+                            
+                            
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        
+                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;
+                        <a href="/topics/" >
+                        topics
+                        </a>
+                        
+                    </td>
+                    <td align="right" nowrap>
+                        
+                    </td>
+                    <td align="right" nowrap>
+                        
+                    </td>
+                    <td align="right" nowrap>
+                        2026-11-14 21:10
+                    </td>
+                    <td style="width:75px">
+                        <div class="btn-group btn-group-xs pull-right operations" role="group">
+                            <label class="btn" onclick="handleRename('topics', '\/')">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </label>
+                            
+                            <label class="btn" onclick="handleDelete('\/topics\/')">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </label>
+                            
+                            
+                        </div>
+                    </td>
+                </tr>
+                
+            </table>
+            
+        </form>
+    </div>
+
+    
+
+    <br/>
+    <br/>
+    <div id="progress-area" class="footer" style="display: none;">
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    
+    let dropArea = document.getElementById("drop-area");
+    let progressArea = document.getElementById("progress-area");
+
+
+    ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+
+    ;['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ;['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function highlight(e) {
+        dropArea.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        dropArea.classList.remove('highlight');
+    }
+
+    function handleDrop(e) {
+        var dt = e.dataTransfer;
+        var files = dt.files;
+
+        handleFiles(files);
+    }
+
+    function reloadPage() {
+        window.location.reload(true);
+    }
+
+    var uploadList = {};
+
+    function handleFiles(files) {
+        files = [...files];
+        files.forEach(startUpload);
+        renderProgress();
+        files.forEach(uploadFile);
+    }
+
+    function startUpload(file, i) {
+        uploadList[file.name] = {'name': file.name, 'percent': 0, 'finish': false};
+    }
+
+    function renderProgress() {
+        var values = Object.values(uploadList);
+        var html = '<table class="table">\n<tr><th>Uploading</th><\/tr>\n';
+        for (let i of values) {
+            var progressBarClass = 'progress-bar-striped active';
+            if (i.percent >= 100) {
+                progressBarClass = 'progress-bar-success';
+            }
+            html += '<tr>\n<td>\n';
+            html += '<div class="progress" style="margin-bottom: 2px;">\n';
+            html += '<div class="progress-bar ' + progressBarClass + '" role="progressbar" aria-valuenow="' + '100" aria-valuemin="0" aria-valuemax="100" style="width:' + i.percent + '%;">';
+            html += '<span style="margin-right: 10px;">' + i.name + '</span>' + i.percent + '%<\/div>';
+            html += '<\/div>\n<\/td>\n<\/tr>\n';
+        }
+        html += '<\/table>\n';
+        progressArea.innerHTML = html;
+        if (values.length > 0) {
+            progressArea.attributes.style.value = '';
+        }
+    }
+
+    function reportProgress(file, percent) {
+        var item = uploadList[file]
+        item.percent = percent;
+        renderProgress();
+    }
+
+    function finishUpload(file) {
+        uploadList[file]['finish'] = true;
+        renderProgress();
+        var allFinish = true;
+        for (let i of Object.values(uploadList)) {
+            if (!i.finish) {
+                allFinish = false;
+                break;
+            }
+        }
+        if (allFinish) {
+            console.log('All Finish');
+            reloadPage();
+        }
+    }
+
+    function uploadFile(file, i) {
+        var url = window.location.href;
+        var xhr = new XMLHttpRequest();
+        var fileName = file.name;
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                finishUpload(fileName)
+            }
+        }
+        xhr.upload.addEventListener('progress', function(e) {
+            if (e.lengthComputable) {
+                var percent = Math.ceil((e.loaded / e.total) * 100);
+                reportProgress(fileName, percent)
+            }
+        });
+        xhr.upload.addEventListener('loadend', function(e) {
+            finishUpload(fileName);
+        });
+        var formData = new FormData();
+        xhr.open('POST', url, true);
+        formData.append('file', file);
+        xhr.send(formData);
+    }
+
+    function handleCreateDir() {
+        var dirName = prompt('Folder Name:', '');
+        dirName = dirName.trim();
+        if (dirName == null || dirName == '') {
+            return;
+        }
+        var baseUrl = window.location.href;
+        if (!baseUrl.endsWith('/')) {
+            baseUrl += '/';
+        }
+        var url = baseUrl + encodeURIComponent(dirName);
+        if (!url.endsWith('/')) {
+            url += '/';
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, false);
+        xhr.setRequestHeader('Content-Type', '');
+        xhr.send();
+        reloadPage();
+    }
+
+    function handleRename(originName, basePath) {
+        var newName = prompt('New Name:', originName);
+        if (newName == null || newName == '') {
+            return;
+        }
+        var url = basePath + encodeURIComponent(newName);
+        var originPath = basePath + originName;
+        url += '?mv.from=' + encodeURIComponent(originPath);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, false);
+        xhr.setRequestHeader('Content-Type', '');
+        xhr.send();
+        reloadPage();
+    }
+
+    function handleDelete(path) {
+        if (!confirm('Are you sure to delete ' + path + '?')) {
+            return;
+        }
+        var url = path;
+        if (url.endsWith('/')) {
+            url += '?recursive=true';
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('DELETE', url, false);
+        xhr.send();
+        reloadPage();
+    }
+</script>
+</html>
+
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8333/
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.007
+[2026-11-14T16:11:24-05:00] CUERPO: <?xml version="1.0" encoding="UTF-8"?>
+<ListAllMyBucketsResult><Owner><ID></ID></Owner><Buckets><Bucket><Name>ta-ind-01-20261114t160821039874</Name><CreationDate>2026-11-14T21:08:22Z</CreationDate></Bucket><Bucket><Name>ta-ind-01-20261114t161012710281</Name><CreationDate>2026-11-14T21:10:21Z</CreationDate></Bucket></Buckets></ListAllMyBucketsResult>
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Dos servidores, capacidad suficiente y servicios listos antes del experimento
+[2026-11-14T16:11:24-05:00] ETAPA 1: escritura y comprobacion directa de ambas replicas
+[2026-11-14T16:11:24-05:00] SHA256_ESPERADO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=base20261114t161123023940
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.213
+[2026-11-14T16:11:24-05:00] CUERPO: {"fid":"13,087a06cd52","url":"volume1:8080","publicUrl":"volume1:8080","count":1}
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Asignacion inicial con dos servidores
+[2026-11-14T16:11:24-05:00] HTTP POST http://127.0.0.1:8080/13,087a06cd52
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 201; duracion_s=0.0173
+[2026-11-14T16:11:24-05:00] CUERPO: {"name":"prueba.txt","size":112,"eTag":"e2c2303d","mime":"text/plain"}
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Carga inicial
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=13
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.012
+[2026-11-14T16:11:24-05:00] CUERPO: {"volumeOrFileId":"13","locations":[{"url":"volume1:8080","publicUrl":"volume1:8080","dataCenter":"dc1","grpcPort":18080},{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8080/13,087a06cd52
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.0052
+[2026-11-14T16:11:24-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:24-05:00] SHA256_OBTENIDO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8081/13,087a06cd52
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.004
+[2026-11-14T16:11:24-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:24-05:00] SHA256_OBTENIDO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:11:24-05:00] PRUEBA COMPLEMENTARIA: acceso por S3 y Filer
+[2026-11-14T16:11:24-05:00] HTTP PUT http://127.0.0.1:8333/ta-ind-01-20261114t161123023940
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.0067
+[2026-11-14T16:11:24-05:00] CUERPO: 
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Creacion de bucket S3 local
+[2026-11-14T16:11:24-05:00] HTTP PUT http://127.0.0.1:8333/ta-ind-01-20261114t161123023940/prueba.txt
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.2156
+[2026-11-14T16:11:24-05:00] CUERPO: 
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Escritura S3 local
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8333/ta-ind-01-20261114t161123023940/prueba.txt
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.006
+[2026-11-14T16:11:24-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Lectura S3 identica
+[2026-11-14T16:11:24-05:00] HTTP GET http://127.0.0.1:8888/buckets/ta-ind-01-20261114t161123023940/prueba.txt
+[2026-11-14T16:11:24-05:00] HTTP_STATUS: 200; duracion_s=0.0038
+[2026-11-14T16:11:24-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:24-05:00] VERIFICACION_OK: Lectura mediante Filer identica
+[2026-11-14T16:11:24-05:00] ETAPA 2: detencion controlada de volume1 (no particion de red)
+[2026-11-14T16:11:24-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" stop -t 5 volume1
+[2026-11-14T16:11:30-05:00] SALIDA:
+ Container ta-ind-01-seaweedfs-volume1-1 Stopping 
+ Container ta-ind-01-seaweedfs-volume1-1 Stopped 
+
+[2026-11-14T16:11:30-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:30-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:11:30-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED              STATUS                                PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     5 minutes ago        Up 5 minutes                          127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    About a minute ago   Up About a minute                     127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        5 minutes ago        Up 5 minutes                          127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   12 seconds ago       Exited (137) Less than a second ago   
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   12 seconds ago       Up 8 seconds                          127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:11:30-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:30-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=13
+[2026-11-14T16:11:30-05:00] HTTP_STATUS: 200; duracion_s=0.0027
+[2026-11-14T16:11:30-05:00] CUERPO: {"volumeOrFileId":"13","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:11:30-05:00] HTTP GET http://127.0.0.1:8081/13,087a06cd52
+[2026-11-14T16:11:30-05:00] HTTP_STATUS: 200; duracion_s=0.0029
+[2026-11-14T16:11:30-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:30-05:00] SHA256_OBTENIDO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:30-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:11:30-05:00] HTTP GET http://127.0.0.1:9333/dir/status
+[2026-11-14T16:11:30-05:00] HTTP_STATUS: 200; duracion_s=0.0079
+[2026-11-14T16:11:30-05:00] CUERPO: {"Topology":{"Max":64,"Free":50,"DataCenters":[{"Id":"dc1","Racks":[{"Id":"rack1","DataNodes":[{"Url":"volume2:8080","PublicUrl":"volume2:8080","Volumes":14,"EcShards":0,"Max":64,"VolumeIds":" 1-14"}]}]}],"Layouts":[{"replication":"001","ttl":"","writables":[],"collection":"ta-ind-01-20261114t161123023940","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"base20261114t160821039874","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"ta-ind-01-20261114t160821039874","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"recuperado20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"ta-ind-01-20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"base20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"","diskType":"hdd"},{"replication":"001","ttl":"","writables":null,"collection":"degradado20261114t161012710281","diskType":"hdd"},{"replication":"001","ttl":"","writables":[],"collection":"base20261114t161123023940","diskType":"hdd"}]},"Version":"30GB 3.85 7d7e06681"}
+[2026-11-14T16:11:30-05:00] HTTP GET http://127.0.0.1:8333/ta-ind-01-20261114t161123023940/prueba.txt
+[2026-11-14T16:11:30-05:00] HTTP_STATUS: 200; duracion_s=0.0087
+[2026-11-14T16:11:30-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:30-05:00] VERIFICACION_OK: Lectura S3 del objeto previo con volume1 detenido
+[2026-11-14T16:11:30-05:00] ETAPA 3: intento de asignar NUEVA coleccion con replication=001 y un solo servidor
+[2026-11-14T16:11:30-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=degradado20261114t161123023940
+[2026-11-14T16:11:41-05:00] HTTP_STATUS: 406; duracion_s=10.0494
+[2026-11-14T16:11:41-05:00] CUERPO: {"error":"failed to find writable volumes for collection:degradado20261114t161123023940 replication:001 ttl: error: No writable volumes"}
+[2026-11-14T16:11:41-05:00] VERIFICACION_OK: Nueva asignacion rechazada: no hay dos servidores para replication=001
+[2026-11-14T16:11:41-05:00] ETAPA 4: reinicio del mismo volume1 con sus datos persistentes
+[2026-11-14T16:11:41-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" start volume1
+[2026-11-14T16:11:41-05:00] SALIDA:
+ Container ta-ind-01-seaweedfs-volume1-1 Starting 
+ Container ta-ind-01-seaweedfs-volume1-1 Started 
+
+[2026-11-14T16:11:41-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:41-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=13
+[2026-11-14T16:11:41-05:00] HTTP_STATUS: 200; duracion_s=0.0044
+[2026-11-14T16:11:41-05:00] CUERPO: {"volumeOrFileId":"13","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:11:43-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=13
+[2026-11-14T16:11:43-05:00] HTTP_STATUS: 200; duracion_s=0.005
+[2026-11-14T16:11:43-05:00] CUERPO: {"volumeOrFileId":"13","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080},{"url":"volume1:8080","publicUrl":"volume1:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:11:43-05:00] HTTP GET http://127.0.0.1:8080/13,087a06cd52
+[2026-11-14T16:11:43-05:00] HTTP_STATUS: 200; duracion_s=0.0025
+[2026-11-14T16:11:43-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:43-05:00] SHA256_OBTENIDO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:43-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:11:43-05:00] HTTP GET http://127.0.0.1:8081/13,087a06cd52
+[2026-11-14T16:11:43-05:00] HTTP_STATUS: 200; duracion_s=0.0025
+[2026-11-14T16:11:43-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:43-05:00] SHA256_OBTENIDO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:43-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:11:43-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=recuperado20261114t161123023940
+[2026-11-14T16:11:43-05:00] HTTP_STATUS: 200; duracion_s=0.2042
+[2026-11-14T16:11:43-05:00] CUERPO: {"fid":"15,0b14fdee68","url":"volume2:8080","publicUrl":"volume2:8080","count":1}
+[2026-11-14T16:11:43-05:00] VERIFICACION_OK: Nueva asignacion tras reiniciar volume1
+[2026-11-14T16:11:43-05:00] HTTP POST http://127.0.0.1:8081/15,0b14fdee68
+[2026-11-14T16:11:43-05:00] HTTP_STATUS: 201; duracion_s=0.0063
+[2026-11-14T16:11:43-05:00] CUERPO: {"name":"prueba.txt","size":112,"eTag":"e2c2303d","mime":"text/plain"}
+[2026-11-14T16:11:43-05:00] VERIFICACION_OK: Nueva escritura tras recuperacion
+[2026-11-14T16:11:43-05:00] HTTP GET http://127.0.0.1:8080/15,0b14fdee68
+[2026-11-14T16:11:43-05:00] HTTP_STATUS: 200; duracion_s=0.007
+[2026-11-14T16:11:43-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:43-05:00] SHA256_OBTENIDO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:43-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:11:43-05:00] HTTP GET http://127.0.0.1:8081/15,0b14fdee68
+[2026-11-14T16:11:43-05:00] HTTP_STATUS: 200; duracion_s=0.0053
+[2026-11-14T16:11:43-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T161123023940
+
+[2026-11-14T16:11:43-05:00] SHA256_OBTENIDO: 25b33ad8de4b41cbce48721b1cfdcbe99f376a95fbcefa389a7b00a8731f310e
+[2026-11-14T16:11:43-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:11:43-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:11:43-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED              STATUS              PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     5 minutes ago        Up 5 minutes        127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    About a minute ago   Up About a minute   127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        5 minutes ago        Up 5 minutes        127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   25 seconds ago       Up 2 seconds        127.0.0.1:8080->8080/tcp
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   25 seconds ago       Up 21 seconds       127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:11:43-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:43-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" logs --no-color --tail 35 master volume1 volume2 filer s3
+[2026-11-14T16:11:44-05:00] SALIDA:
+volume1-1  | I1114 21:11:41.442695 volume_loading.go:157 loading memory index /data/base20261114t160821039874_5.idx to memory
+volume1-1  | I1114 21:11:41.442612 volume_loading.go:157 loading memory index /data/ta-ind-01-20261114t161123023940_14.idx to memory
+volume1-1  | I1114 21:11:41.442615 disk_location.go:183 data file /data/ta-ind-01-20261114t160821039874_8.dat, replication=001 v=3 size=216 ttl=
+filer-1    | I1114 21:06:44.075194 master_client.go:20 the cluster has 1 filer
+filer-1    | I1114 21:06:44.075222 filer_server.go:201 filer:8888 bootstrap from peers [node_type:"filer"  address:"filer:8888"  is_add:true  created_at_ns:1794690404038728111]
+filer-1    | I1114 21:06:44.075326 filer.go:112 filer:8888 aggregate from peers [filer:8888]
+filer-1    | I1114 21:06:44.077231 filer.go:317 Start Seaweed Filer 30GB 3.85 7d7e06681 at filer:8888
+filer-1    | I1114 21:06:44.077315 meta_aggregator.go:76 loopSubscribeToOneFiler read filer:8888 start from 2026-11-14 21:05:44.075215691 +0000 UTC 1794690344075215691
+volume2-1  | I1114 21:11:22.798867 volume_loading.go:139 checking volume data integrity for volume 5
+master-1   | I1114 21:11:41.446506 volume_layout.go:417 Volume 1 becomes writable
+master-1   | I1114 21:11:41.446510 volume_layout.go:417 Volume 10 becomes writable
+master-1   | I1114 21:11:41.446514 volume_layout.go:417 Volume 5 becomes writable
+master-1   | I1114 21:11:41.446517 volume_layout.go:417 Volume 3 becomes writable
+master-1   | I1114 21:11:41.446520 volume_layout.go:417 Volume 9 becomes writable
+volume1-1  | I1114 21:11:41.442734 volume_loading.go:98 readSuperBlock volume 3 version 3
+filer-1    | I1114 21:06:44.078623 meta_aggregator.go:178 subscribing remote filer:8888 meta change: 2026-11-14 21:05:44.075215691 +0000 UTC, clientId:1386683783
+s3-1       | I1114 21:06:28.652715 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:11:41.446524 volume_layout.go:417 Volume 6 becomes writable
+master-1   | I1114 21:11:41.446528 volume_layout.go:417 Volume 7 becomes writable
+volume2-1  | I1114 21:11:22.798874 volume_loading.go:157 loading memory index /data/base20261114t160821039874_5.idx to memory
+volume2-1  | I1114 21:11:22.798893 disk_location.go:183 data file /data/base20261114t160821039874_5.dat, replication=001 v=3 size=8 ttl=
+volume2-1  | I1114 21:11:22.798966 volume_loading.go:98 readSuperBlock volume 6 version 3
+master-1   | I1114 21:11:41.446533 volume_layout.go:417 Volume 11 becomes writable
+volume2-1  | I1114 21:11:22.798978 volume_loading.go:139 checking volume data integrity for volume 6
+volume2-1  | I1114 21:11:22.798985 volume_loading.go:157 loading memory index /data/base20261114t160821039874_6.idx to memory
+volume1-1  | I1114 21:11:41.442719 disk_location.go:183 data file /data/ta-ind-01-20261114t161012710281_10.dat, replication=001 v=3 size=208 ttl=
+volume1-1  | I1114 21:11:41.442729 disk_location.go:183 data file /data/base20261114t160821039874_5.dat, replication=001 v=3 size=8 ttl=
+volume2-1  | I1114 21:11:22.799008 disk_location.go:183 data file /data/base20261114t160821039874_6.dat, replication=001 v=3 size=8 ttl=
+volume1-1  | I1114 21:11:41.442750 volume_loading.go:139 checking volume data integrity for volume 3
+volume1-1  | I1114 21:11:41.442758 volume_loading.go:157 loading memory index /data/base20261114t160821039874_3.idx to memory
+volume1-1  | I1114 21:11:41.442783 disk_location.go:183 data file /data/base20261114t160821039874_3.dat, replication=001 v=3 size=8 ttl=
+volume1-1  | I1114 21:11:41.442812 disk_location.go:183 data file /data/ta-ind-01-20261114t161123023940_14.dat, replication=001 v=3 size=208 ttl=
+volume2-1  | I1114 21:11:22.799077 volume_loading.go:98 readSuperBlock volume 9 version 3
+volume2-1  | I1114 21:11:22.799093 volume_loading.go:139 checking volume data integrity for volume 9
+volume2-1  | I1114 21:11:22.799105 volume_loading.go:157 loading memory index /data/base20261114t161012710281_9.idx to memory
+volume1-1  | I1114 21:11:41.442835 volume_loading.go:98 readSuperBlock volume 2 version 3
+filer-1    | I1114 21:06:44.079515 filer_grpc_server_sub_meta.go:314 + local listener filer:filer:8888@172.18.0.5:41122 clientId -1386683783 clientEpoch 1
+master-1   | I1114 21:11:41.446536 volume_layout.go:417 Volume 4 becomes writable
+master-1   | I1114 21:11:41.446548 volume_layout.go:417 Volume 13 becomes writable
+filer-1    | I1114 21:06:44.079540 filer_grpc_server_sub_meta.go:133  + filer:filer:8888@172.18.0.5:41122 local subscribe / from 2026-11-14 21:05:44.075215691 +0000 UTC clientId:-1386683783
+volume1-1  | I1114 21:11:41.442852 volume_loading.go:98 readSuperBlock volume 13 version 3
+volume2-1  | I1114 21:11:22.799142 disk_location.go:183 data file /data/base20261114t161012710281_9.dat, replication=001 v=3 size=208 ttl=
+s3-1       | I1114 21:06:29.656111 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume2-1  | I1114 21:11:22.799225 volume_loading.go:98 readSuperBlock volume 12 version 3
+volume2-1  | I1114 21:11:22.799245 volume_loading.go:139 checking volume data integrity for volume 12
+volume2-1  | I1114 21:11:22.799257 volume_loading.go:157 loading memory index /data/recuperado20261114t161012710281_12.idx to memory
+volume2-1  | I1114 21:11:22.799283 disk_location.go:183 data file /data/recuperado20261114t161012710281_12.dat, replication=001 v=3 size=208 ttl=
+volume1-1  | I1114 21:11:41.442868 volume_loading.go:139 checking volume data integrity for volume 2
+volume1-1  | I1114 21:11:41.442868 volume_loading.go:139 checking volume data integrity for volume 13
+volume1-1  | I1114 21:11:41.442876 volume_loading.go:157 loading memory index /data/base20261114t160821039874_2.idx to memory
+volume1-1  | I1114 21:11:41.442888 volume_loading.go:157 loading memory index /data/base20261114t161123023940_13.idx to memory
+volume1-1  | I1114 21:11:41.442898 disk_location.go:183 data file /data/base20261114t160821039874_2.dat, replication=001 v=3 size=8 ttl=
+filer-1    | I1114 21:06:44.079559 filer_grpc_server_sub_meta.go:146 read on disk filer:filer:8888@172.18.0.5:41122 local subscribe / from 2026-11-14 21:05:44.075215691 +0000 UTC
+filer-1    | I1114 21:06:44.079590 filer_grpc_server_sub_meta.go:165 read in memory filer:filer:8888@172.18.0.5:41122 local subscribe / from 2026-11-14 21:05:44.075215691 +0000 UTC
+filer-1    | I1114 21:06:44.707217 filer_grpc_server_sub_meta.go:314 +  listener s3@172.18.0.3:49084 clientId 1452762031 clientEpoch 2
+filer-1    | I1114 21:06:44.707244 filer_grpc_server_sub_meta.go:43  s3@172.18.0.3:49084 starts to subscribe /etc/ from 2026-11-14 21:06:44.703535454 +0000 UTC
+volume1-1  | I1114 21:11:41.442923 volume_loading.go:139 checking volume data integrity for volume 9
+filer-1    | I1114 21:08:38.526367 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:08:49.303723 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:09:00.081777 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+volume1-1  | I1114 21:11:41.442937 volume_loading.go:157 loading memory index /data/base20261114t161012710281_9.idx to memory
+volume1-1  | I1114 21:11:41.442974 disk_location.go:183 data file /data/base20261114t161123023940_13.dat, replication=001 v=3 size=184 ttl=
+volume1-1  | I1114 21:11:41.442997 volume_loading.go:98 readSuperBlock volume 11 version 3
+volume1-1  | I1114 21:11:41.443040 disk_location.go:183 data file /data/base20261114t161012710281_9.dat, replication=001 v=3 size=184 ttl=
+master-1   | I1114 21:11:41.446551 volume_layout.go:417 Volume 8 becomes writable
+volume1-1  | I1114 21:11:41.443138 volume_loading.go:139 checking volume data integrity for volume 11
+filer-1    | I1114 21:09:10.862103 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+volume1-1  | I1114 21:11:41.443191 volume_loading.go:157 loading memory index /data/11.idx to memory
+volume2-1  | I1114 21:11:22.799297 disk_location.go:239 Store started on dir: /data with 12 volumes max 64
+volume2-1  | I1114 21:11:22.799428 disk_location.go:242 Store started on dir: /data with 0 ec shards
+volume2-1  | I1114 21:11:22.799788 volume_grpc_client_to_master.go:52 Volume server start with seed master nodes: [master:9333]
+master-1   | I1114 21:11:41.446557 volume_layout.go:417 Volume 14 becomes writable
+filer-1    | I1114 21:09:21.644511 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+master-1   | I1114 21:11:41.446567 master_grpc_server.go:204 master see new volume 2 from volume1:8080
+volume1-1  | I1114 21:11:41.443424 disk_location.go:183 data file /data/11.dat, replication=001 v=3 size=1056 ttl=
+master-1   | I1114 21:11:41.446571 master_grpc_server.go:204 master see new volume 12 from volume1:8080
+volume1-1  | I1114 21:11:41.443462 disk_location.go:239 Store started on dir: /data with 14 volumes max 64
+master-1   | I1114 21:11:41.446574 master_grpc_server.go:204 master see new volume 1 from volume1:8080
+volume2-1  | I1114 21:11:22.802000 volume.go:381 Start Seaweed volume server 30GB 3.85 7d7e06681 at 0.0.0.0:8080
+volume2-1  | I1114 21:11:22.802692 volume_grpc_client_to_master.go:109 Heartbeat to: master:9333
+volume1-1  | I1114 21:11:41.443681 disk_location.go:242 Store started on dir: /data with 0 ec shards
+volume2-1  | I1114 21:11:24.453654 store.go:169 In dir /data adds volume:13 collection:base20261114t161123023940 replicaPlacement:001 ttl:
+volume1-1  | I1114 21:11:41.443912 volume_grpc_client_to_master.go:52 Volume server start with seed master nodes: [master:9333]
+volume1-1  | I1114 21:11:41.444510 volume.go:381 Start Seaweed volume server 30GB 3.85 7d7e06681 at 0.0.0.0:8080
+volume1-1  | I1114 21:11:41.445502 volume_grpc_client_to_master.go:109 Heartbeat to: master:9333
+volume1-1  | I1114 21:11:43.473747 store.go:169 In dir /data adds volume:15 collection:recuperado20261114t161123023940 replicaPlacement:001 ttl:
+volume1-1  | I1114 21:11:43.474321 volume_loading.go:139 checking volume data integrity for volume 15
+volume1-1  | I1114 21:11:43.474353 volume_loading.go:157 loading memory index /data/recuperado20261114t161123023940_15.idx to memory
+volume1-1  | I1114 21:11:43.476815 store.go:173 add volume 15
+volume1-1  | I1114 21:11:43.476944 volume_grpc_client_to_master.go:189 volume server volume1:8080 adds volume 15
+master-1   | I1114 21:11:41.446577 master_grpc_server.go:204 master see new volume 10 from volume1:8080
+master-1   | I1114 21:11:41.446579 master_grpc_server.go:204 master see new volume 5 from volume1:8080
+volume2-1  | I1114 21:11:24.454531 volume_loading.go:139 checking volume data integrity for volume 13
+volume2-1  | I1114 21:11:24.454578 volume_loading.go:157 loading memory index /data/base20261114t161123023940_13.idx to memory
+volume2-1  | I1114 21:11:24.457393 store.go:173 add volume 13
+volume2-1  | I1114 21:11:24.457564 volume_grpc_client_to_master.go:189 volume server volume2:8080 adds volume 13
+volume2-1  | I1114 21:11:24.728081 store.go:169 In dir /data adds volume:14 collection:ta-ind-01-20261114t161123023940 replicaPlacement:001 ttl:
+master-1   | I1114 21:11:41.446581 master_grpc_server.go:204 master see new volume 3 from volume1:8080
+master-1   | I1114 21:11:41.446583 master_grpc_server.go:204 master see new volume 9 from volume1:8080
+s3-1       | I1114 21:06:30.660077 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:11:41.446586 master_grpc_server.go:204 master see new volume 6 from volume1:8080
+s3-1       | I1114 21:06:31.664092 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:32.668484 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:33.671593 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:34.675816 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:35.678112 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+volume2-1  | I1114 21:11:24.728872 volume_loading.go:139 checking volume data integrity for volume 14
+master-1   | I1114 21:11:41.446588 master_grpc_server.go:204 master see new volume 7 from volume1:8080
+volume2-1  | I1114 21:11:24.728912 volume_loading.go:157 loading memory index /data/ta-ind-01-20261114t161123023940_14.idx to memory
+volume2-1  | I1114 21:11:24.732259 store.go:173 add volume 14
+volume2-1  | I1114 21:11:24.732352 volume_grpc_client_to_master.go:189 volume server volume2:8080 adds volume 14
+volume2-1  | I1114 21:11:43.466045 store.go:169 In dir /data adds volume:15 collection:recuperado20261114t161123023940 replicaPlacement:001 ttl:
+s3-1       | I1114 21:06:36.682061 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:11:41.446590 master_grpc_server.go:204 master see new volume 11 from volume1:8080
+s3-1       | I1114 21:06:37.685323 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:11:41.446595 master_grpc_server.go:204 master see new volume 4 from volume1:8080
+master-1   | I1114 21:11:41.446599 master_grpc_server.go:204 master see new volume 13 from volume1:8080
+master-1   | I1114 21:11:41.446601 master_grpc_server.go:204 master see new volume 8 from volume1:8080
+volume2-1  | I1114 21:11:43.467369 volume_loading.go:139 checking volume data integrity for volume 15
+master-1   | I1114 21:11:41.446603 master_grpc_server.go:204 master see new volume 14 from volume1:8080
+filer-1    | I1114 21:09:32.413768 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:09:43.189731 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:09:53.961286 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes and no free volumes left for {"replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432}
+filer-1    | I1114 21:09:57.357595 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-08.52a71d87: AssignVolume: rpc error: code = Unavailable desc = error reading from server: EOF
+filer-1    | I1114 21:09:57.357595 masterclient.go:243 .filer masterClient failed to receive from master:9333: rpc error: code = Unavailable desc = error reading from server: EOF
+volume2-1  | I1114 21:11:43.467417 volume_loading.go:157 loading memory index /data/recuperado20261114t161123023940_15.idx to memory
+filer-1    | ..............................................................................................................................................................................................................................................................I1114 21:10:21.895265 masterclient.go:265 + filer@filer:8888 noticed .filer filer:8888
+filer-1    | I1114 21:10:21.895312 lock_ring.go:43 add server filer:8888
+filer-1    | I1114 21:10:21.895319 lock_ring.go:47 add server: already exists filer:8888
+filer-1    | I1114 21:10:21.895355 meta_aggregator.go:76 loopSubscribeToOneFiler read filer:8888 start from 2026-11-14 21:10:21.895297816 +0000 UTC 1794690621895297816
+filer-1    | I1114 21:10:21.895774 meta_aggregator.go:178 subscribing remote filer:8888 meta change: 2026-11-14 21:10:21.895297816 +0000 UTC, clientId:1386683783
+filer-1    | I1114 21:10:21.897017 filer_grpc_server_sub_meta.go:314 + local listener filer:filer:8888@172.18.0.5:49580 clientId -1386683783 clientEpoch 2
+filer-1    | I1114 21:10:21.897040 filer_grpc_server_sub_meta.go:133  + filer:filer:8888@172.18.0.5:49580 local subscribe / from 2026-11-14 21:10:21.895297816 +0000 UTC clientId:-1386683783
+s3-1       | I1114 21:06:38.687179 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+filer-1    | I1114 21:10:21.897051 filer_grpc_server_sub_meta.go:146 read on disk filer:filer:8888@172.18.0.5:49580 local subscribe / from 2026-11-14 21:10:21.895297816 +0000 UTC
+filer-1    | I1114 21:10:21.897110 filer_grpc_server_sub_meta.go:165 read in memory filer:filer:8888@172.18.0.5:49580 local subscribe / from 2026-11-14 21:10:21.895297816 +0000 UTC
+filer-1    | I1114 21:10:21.897136 filer_grpc_server_sub_meta.go:127 disconnect filer:filer:8888@172.18.0.5:41122 local subscriber / clientId:-1386683783
+filer-1    | I1114 21:10:21.897139 filer_grpc_server_sub_meta.go:330 - local listener filer:filer:8888@172.18.0.5:41122 clientId -1386683783 clientEpoch 1
+filer-1    | I1114 21:10:21.897484 meta_aggregator.go:82 stop subscribing peer filer:8888 meta change
+volume2-1  | I1114 21:11:43.471379 store.go:173 add volume 15
+volume2-1  | I1114 21:11:43.471536 volume_grpc_client_to_master.go:189 volume server volume2:8080 adds volume 15
+s3-1       | I1114 21:06:39.689150 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:11:43.465365 master_server_handlers.go:146 dirAssign volume growth {"collection":"recuperado20261114t161123023940","replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432} from 172.18.0.1:39992
+master-1   | I1114 21:11:43.465431 master_grpc_server_volume.go:141 volume grow &{Option:{"collection":"recuperado20261114t161123023940","replication":{"node":1},"ttl":{"Count":0,"Unit":0},"preallocate":33554432} Count:0 Force:false Reason:http assign}
+master-1   | I1114 21:11:43.471898 volume_growth.go:269 Created Volume 15 on topo:dc1:rack1:volume2:8080
+filer-1    | ..I1114 21:11:38.525913 filer_notify.go:104 metadata log write failed /topics/.system/log/2026-11-14/21-11.52a71d87: AssignVolume: rpc error: code = Unknown desc = failed to find writable volumes for collection: replication:001 ttl: error: No writable volumes
+s3-1       | I1114 21:06:40.691728 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:41.693823 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+s3-1       | I1114 21:06:42.695754 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:11:43.471965 volume_layout.go:229 volume 15 does not have enough copies
+master-1   | I1114 21:11:43.471975 volume_layout.go:237 volume 15 remove from writable
+master-1   | I1114 21:11:43.477342 volume_growth.go:269 Created Volume 15 on topo:dc1:rack1:volume1:8080
+master-1   | I1114 21:11:43.477373 volume_layout.go:417 Volume 15 becomes writable
+master-1   | I1114 21:11:43.477416 volume_growth.go:282 Registered Volume 15 on topo:dc1:rack1:volume2:8080
+s3-1       | I1114 21:06:43.698661 s3.go:217 wait to connect to filer filer:8888 grpc address filer:18888
+master-1   | I1114 21:11:43.477427 volume_growth.go:282 Registered Volume 15 on topo:dc1:rack1:volume1:8080
+s3-1       | I1114 21:06:44.703475 s3.go:213 S3 read filer buckets dir: /buckets
+s3-1       | I1114 21:06:44.703504 s3.go:220 connected to filer filer:8888 grpc address filer:18888
+s3-1       | W1114 21:06:44.704146 auth_credentials.go:131 fail to load config: read S3 config: filer: no entry is found in filer store
+s3-1       | I1114 21:06:44.704630 s3api_circuit_breaker.go:35 s3 circuit breaker not configured
+s3-1       | I1114 21:06:44.706134 s3.go:369 Start Seaweed S3 API Server 30GB 3.85 7d7e06681 at http port 8333
+s3-1       | I1114 21:08:22.138134 auth_credentials_subscribe.go:84 updated bucketMetadata /buckets/name:"ta-ind-01-20261114t160821039874"  is_directory:true  attributes:{mtime:1794690502  file_mode:2147484159  crtime:1794690502}
+s3-1       | I1114 21:10:21.984821 auth_credentials_subscribe.go:84 updated bucketMetadata /buckets/name:"ta-ind-01-20261114t161012710281"  is_directory:true  attributes:{mtime:1794690621  file_mode:2147484159  crtime:1794690621}
+s3-1       | I1114 21:11:24.710996 auth_credentials_subscribe.go:84 updated bucketMetadata /buckets/name:"ta-ind-01-20261114t161123023940"  is_directory:true  attributes:{mtime:1794690684  file_mode:2147484159  crtime:1794690684}
+
+[2026-11-14T16:11:44-05:00] EXIT_CODE: 0
+[2026-11-14T16:11:44-05:00] RESULTADO: prueba completada; cinco servicios activos. No se tomaron capturas.

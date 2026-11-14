@@ -1,0 +1,195 @@
+[2026-11-14T16:08:21-05:00] ENTORNO: {"usuario": "User Program", "equipo": "DESKTOP-GTVSQ58", "sistema": "Windows-11-10.0.26200-SP0", "python": "3.14.7", "zona": "America/Guayaquil UTC-05:00", "ejecucion": "20261114T160821039874"}
+[2026-11-14T16:08:21-05:00] COMANDO: docker version
+[2026-11-14T16:08:21-05:00] SALIDA:
+Client:
+ Version:           29.7.2
+ API version:       1.55
+ Go version:        go1.26.5
+ Git commit:        a7dcaa6
+ Built:             Wed Aug  5 18:31:33 2026
+ OS/Arch:           windows/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.89.0 (238018)
+ Engine:
+  Version:          29.7.2
+  API version:      1.55 (minimum version 1.40)
+  Go version:       go1.26.5
+  Git commit:       6a43e3d
+  Built:            Wed Aug  5 18:28:36 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.3.3
+  GitCommit:        aad11006b869517fcd3009450b6f82da282e1a9b
+ runc:
+  Version:          1.4.3
+  GitCommit:        v1.4.3-0-gbb14dabe
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+[2026-11-14T16:08:21-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:21-05:00] COMANDO: docker compose version
+[2026-11-14T16:08:21-05:00] SALIDA:
+Docker Compose version v5.5.0
+
+[2026-11-14T16:08:21-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:21-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" config --quiet
+[2026-11-14T16:08:21-05:00] SALIDA:
+
+[2026-11-14T16:08:21-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:21-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:08:21-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED              STATUS              PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     About a minute ago   Up About a minute   127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    About a minute ago   Up About a minute   127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        About a minute ago   Up About a minute   127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   About a minute ago   Up About a minute   127.0.0.1:8080->8080/tcp
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   About a minute ago   Up About a minute   127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:08:21-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:21-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" exec -T master weed version
+[2026-11-14T16:08:21-05:00] SALIDA:
+version 30GB 3.85 7d7e06681 linux amd64
+
+[2026-11-14T16:08:21-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:21-05:00] COMANDO: docker image inspect chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22 --format "{{.Id}} {{json .RepoDigests}}"
+[2026-11-14T16:08:21-05:00] SALIDA:
+sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22 ["chrislusf/seaweedfs@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22"]
+
+[2026-11-14T16:08:21-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:21-05:00] ETAPA 1: escritura y comprobacion directa de ambas replicas
+[2026-11-14T16:08:21-05:00] SHA256_ESPERADO: ee47b0e5e39db0456a5aab7187b7d2947e2025de279ae68f041c40d07b4967c2
+[2026-11-14T16:08:21-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=base20261114t160821039874
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.2102
+[2026-11-14T16:08:22-05:00] CUERPO: {"fid":"1,01e88113c0","url":"volume2:8080","publicUrl":"volume2:8080","count":1}
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Asignacion inicial con dos servidores
+[2026-11-14T16:08:22-05:00] HTTP POST http://127.0.0.1:8081/1,01e88113c0
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 201; duracion_s=0.0324
+[2026-11-14T16:08:22-05:00] CUERPO: {"name":"prueba.txt","size":112,"eTag":"49d319de","mime":"text/plain"}
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Carga inicial
+[2026-11-14T16:08:22-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=1
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.0021
+[2026-11-14T16:08:22-05:00] CUERPO: {"volumeOrFileId":"1","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080},{"url":"volume1:8080","publicUrl":"volume1:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:08:22-05:00] HTTP GET http://127.0.0.1:8080/1,01e88113c0
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.0022
+[2026-11-14T16:08:22-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:22-05:00] SHA256_OBTENIDO: ee47b0e5e39db0456a5aab7187b7d2947e2025de279ae68f041c40d07b4967c2
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:08:22-05:00] HTTP GET http://127.0.0.1:8081/1,01e88113c0
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.0025
+[2026-11-14T16:08:22-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:22-05:00] SHA256_OBTENIDO: ee47b0e5e39db0456a5aab7187b7d2947e2025de279ae68f041c40d07b4967c2
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:08:22-05:00] PRUEBA COMPLEMENTARIA: acceso por S3 y Filer
+[2026-11-14T16:08:22-05:00] HTTP PUT http://127.0.0.1:8333/ta-ind-01-20261114t160821039874
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.0051
+[2026-11-14T16:08:22-05:00] CUERPO: 
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Creacion de bucket S3 local
+[2026-11-14T16:08:22-05:00] HTTP PUT http://127.0.0.1:8333/ta-ind-01-20261114t160821039874/prueba.txt
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.2147
+[2026-11-14T16:08:22-05:00] CUERPO: 
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Escritura S3 local
+[2026-11-14T16:08:22-05:00] HTTP GET http://127.0.0.1:8333/ta-ind-01-20261114t160821039874/prueba.txt
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.0075
+[2026-11-14T16:08:22-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Lectura S3 identica
+[2026-11-14T16:08:22-05:00] HTTP GET http://127.0.0.1:8888/buckets/ta-ind-01-20261114t160821039874/prueba.txt
+[2026-11-14T16:08:22-05:00] HTTP_STATUS: 200; duracion_s=0.004
+[2026-11-14T16:08:22-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:22-05:00] VERIFICACION_OK: Lectura mediante Filer identica
+[2026-11-14T16:08:22-05:00] ETAPA 2: detencion controlada de volume1 (no particion de red)
+[2026-11-14T16:08:22-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" stop -t 5 volume1
+[2026-11-14T16:08:27-05:00] SALIDA:
+ Container ta-ind-01-seaweedfs-volume1-1 Stopping 
+ Container ta-ind-01-seaweedfs-volume1-1 Stopped 
+
+[2026-11-14T16:08:27-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:27-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" ps -a
+[2026-11-14T16:08:27-05:00] SALIDA:
+NAME                            IMAGE                                                                                              COMMAND                  SERVICE   CREATED              STATUS                                PORTS
+ta-ind-01-seaweedfs-filer-1     chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh file…"   filer     2 minutes ago        Up About a minute                     127.0.0.1:8888->8888/tcp
+ta-ind-01-seaweedfs-master-1    chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh mast…"   master    2 minutes ago        Up 2 minutes                          127.0.0.1:9333->9333/tcp
+ta-ind-01-seaweedfs-s3-1        chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh s3 -…"   s3        2 minutes ago        Up About a minute                     127.0.0.1:8333->8333/tcp
+ta-ind-01-seaweedfs-volume1-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume1   About a minute ago   Exited (137) Less than a second ago   
+ta-ind-01-seaweedfs-volume2-1   chrislusf/seaweedfs:3.85@sha256:d67f9b5586f73b6623c143489849c958ae0ec36a698bf4243a19df07cfa28c22   "/entrypoint.sh volu…"   volume2   About a minute ago   Up About a minute                     127.0.0.1:8081->8080/tcp
+
+[2026-11-14T16:08:27-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:27-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=1
+[2026-11-14T16:08:27-05:00] HTTP_STATUS: 200; duracion_s=0.0023
+[2026-11-14T16:08:27-05:00] CUERPO: {"volumeOrFileId":"1","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:08:27-05:00] HTTP GET http://127.0.0.1:8081/1,01e88113c0
+[2026-11-14T16:08:27-05:00] HTTP_STATUS: 200; duracion_s=0.0024
+[2026-11-14T16:08:27-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:27-05:00] SHA256_OBTENIDO: ee47b0e5e39db0456a5aab7187b7d2947e2025de279ae68f041c40d07b4967c2
+[2026-11-14T16:08:27-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:08:27-05:00] HTTP GET http://127.0.0.1:8333/ta-ind-01-20261114t160821039874/prueba.txt
+[2026-11-14T16:08:27-05:00] HTTP_STATUS: 200; duracion_s=0.0044
+[2026-11-14T16:08:27-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:27-05:00] VERIFICACION_OK: Lectura S3 del objeto previo con volume1 detenido
+[2026-11-14T16:08:27-05:00] ETAPA 3: intento de asignar NUEVA coleccion con replication=001 y un solo servidor
+[2026-11-14T16:08:27-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=degradado20261114t160821039874
+[2026-11-14T16:08:38-05:00] HTTP_STATUS: 406; duracion_s=10.0564
+[2026-11-14T16:08:38-05:00] CUERPO: {"error":"failed to find writable volumes for collection:degradado20261114t160821039874 replication:001 ttl: error: No writable volumes and no free volumes left for {\"collection\":\"degradado20261114t160821039874\",\"replication\":{\"node\":1},\"ttl\":{\"Count\":0,\"Unit\":0},\"preallocate\":33554432}"}
+[2026-11-14T16:08:38-05:00] VERIFICACION_OK: Nueva asignacion rechazada: no hay dos servidores para replication=001
+[2026-11-14T16:08:38-05:00] ETAPA 4: reinicio del mismo volume1 con sus datos persistentes
+[2026-11-14T16:08:38-05:00] COMANDO: docker compose -f "C:\Users\User Program\Downloads\TA-IND-01\experimento\docker-compose.yml" start volume1
+[2026-11-14T16:08:38-05:00] SALIDA:
+ Container ta-ind-01-seaweedfs-volume1-1 Starting 
+ Container ta-ind-01-seaweedfs-volume1-1 Started 
+
+[2026-11-14T16:08:38-05:00] EXIT_CODE: 0
+[2026-11-14T16:08:38-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=1
+[2026-11-14T16:08:38-05:00] HTTP_STATUS: 200; duracion_s=0.0025
+[2026-11-14T16:08:38-05:00] CUERPO: {"volumeOrFileId":"1","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:08:40-05:00] HTTP GET http://127.0.0.1:9333/dir/lookup?volumeId=1
+[2026-11-14T16:08:40-05:00] HTTP_STATUS: 200; duracion_s=0.0046
+[2026-11-14T16:08:40-05:00] CUERPO: {"volumeOrFileId":"1","locations":[{"url":"volume2:8080","publicUrl":"volume2:8080","dataCenter":"dc1","grpcPort":18080},{"url":"volume1:8080","publicUrl":"volume1:8080","dataCenter":"dc1","grpcPort":18080}]}
+[2026-11-14T16:08:40-05:00] HTTP GET http://127.0.0.1:8080/1,01e88113c0
+[2026-11-14T16:08:40-05:00] HTTP_STATUS: 200; duracion_s=0.0028
+[2026-11-14T16:08:40-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:40-05:00] SHA256_OBTENIDO: ee47b0e5e39db0456a5aab7187b7d2947e2025de279ae68f041c40d07b4967c2
+[2026-11-14T16:08:40-05:00] VERIFICACION_OK: Contenido identico en puerto 8080
+[2026-11-14T16:08:40-05:00] HTTP GET http://127.0.0.1:8081/1,01e88113c0
+[2026-11-14T16:08:40-05:00] HTTP_STATUS: 200; duracion_s=0.0026
+[2026-11-14T16:08:40-05:00] CUERPO: TA-IND-01 SeaweedFS replication=001
+usuario=User Program
+equipo=DESKTOP-GTVSQ58
+ejecucion=20261114T160821039874
+
+[2026-11-14T16:08:40-05:00] SHA256_OBTENIDO: ee47b0e5e39db0456a5aab7187b7d2947e2025de279ae68f041c40d07b4967c2
+[2026-11-14T16:08:40-05:00] VERIFICACION_OK: Contenido identico en puerto 8081
+[2026-11-14T16:08:40-05:00] HTTP GET http://127.0.0.1:9333/dir/assign?replication=001&count=1&collection=recuperado20261114t160821039874
+[2026-11-14T16:08:50-05:00] HTTP_STATUS: 406; duracion_s=10.043
+[2026-11-14T16:08:50-05:00] CUERPO: {"error":"failed to find writable volumes for collection:recuperado20261114t160821039874 replication:001 ttl: error: No writable volumes and no free volumes left for {\"collection\":\"recuperado20261114t160821039874\",\"replication\":{\"node\":1},\"ttl\":{\"Count\":0,\"Unit\":0},\"preallocate\":33554432}"}
+[2026-11-14T16:08:50-05:00] VERIFICACION_FALLIDA: Nueva asignacion tras reiniciar volume1
+[2026-11-14T16:08:50-05:00] ERROR: AssertionError('Nueva asignacion tras reiniciar volume1')
